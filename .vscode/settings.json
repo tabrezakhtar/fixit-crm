@@ -5,6 +5,7 @@
   "oxc.configPath": "oxlint.config.mjs",
   "oxc.fmt.configPath": "oxfmt.config.mjs",
   "eslint.enable": false,
+  "css.validate": false,
   "[typescript]": {
     "editor.defaultFormatter": "oxc.oxc-vscode"
   },
