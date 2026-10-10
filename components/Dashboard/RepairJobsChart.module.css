@@ -1,0 +1,46 @@
+.legendDotCreated,
+.legendDotCompleted {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  display: inline-block;
+}
+
+.legendDotCreated {
+  background-color: var(--mantine-color-blue-6);
+}
+
+.legendDotCompleted {
+  background-color: var(--mantine-color-teal-6);
+}
+
+.chart {
+  height: 180px;
+  align-items: flex-end;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+}
+
+.bars {
+  height: 160px;
+  align-items: flex-end;
+}
+
+.barCreated,
+.barCompleted {
+  width: 14px;
+  border-radius: var(--mantine-radius-sm) var(--mantine-radius-sm) 0 0;
+}
+
+.barCreated {
+  background-color: var(--mantine-color-blue-6);
+}
+
+.barCompleted {
+  background-color: var(--mantine-color-teal-6);
+}

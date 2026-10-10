@@ -1,0 +1,226 @@
+import {
+  IconBox,
+  IconCalendarEvent,
+  IconChartBar,
+  IconCreditCard,
+  IconDashboard,
+  IconDeviceLaptop,
+  IconFileInvoice,
+  IconSettings,
+  IconTool,
+  IconUserCog,
+  IconUsers,
+} from '@tabler/icons-react';
+
+export type JobStatus =
+  | 'In Progress'
+  | 'Awaiting Diagnosis'
+  | 'Awaiting Parts'
+  | 'Awaiting Approval'
+  | 'Ready for Collection'
+  | 'Overdue';
+
+export interface NavItem {
+  label: string;
+  icon: typeof IconDashboard;
+  active?: boolean;
+}
+
+export const primaryNavItems: NavItem[] = [
+  { label: 'Dashboard', icon: IconDashboard, active: true },
+  { label: 'Repair Jobs', icon: IconTool },
+  { label: 'Customers', icon: IconUsers },
+  { label: 'Equipment', icon: IconDeviceLaptop },
+  { label: 'Appointments & Schedule', icon: IconCalendarEvent },
+  { label: 'Quotes & Estimates', icon: IconFileInvoice },
+  { label: 'Parts & Inventory', icon: IconBox },
+  { label: 'Invoices & Payments', icon: IconCreditCard },
+  { label: 'Technicians', icon: IconUserCog },
+  { label: 'Reports', icon: IconChartBar },
+];
+
+export const secondaryNavItems: NavItem[] = [{ label: 'Settings', icon: IconSettings }];
+
+export interface SummaryCardData {
+  label: string;
+  value: string;
+  delta: string;
+  trend: 'up' | 'down' | 'flat';
+  color: string;
+  icon: string;
+}
+
+export const summaryCards: SummaryCardData[] = [
+  { label: 'Jobs In Progress', value: '18', delta: '+3 today', trend: 'up', color: 'blue', icon: 'tool' },
+  {
+    label: 'Awaiting Diagnosis',
+    value: '5',
+    delta: '2 new',
+    trend: 'flat',
+    color: 'indigo',
+    icon: 'stethoscope',
+  },
+  { label: 'Awaiting Parts', value: '7', delta: '1 overdue', trend: 'down', color: 'yellow', icon: 'box' },
+  {
+    label: 'Ready for Collection',
+    value: '4',
+    delta: 'Ready now',
+    trend: 'up',
+    color: 'green',
+    icon: 'check',
+  },
+  { label: 'Overdue Jobs', value: '3', delta: 'Needs attention', trend: 'down', color: 'red', icon: 'alert' },
+  {
+    label: 'Revenue This Month',
+    value: '£12,450',
+    delta: '+8% vs last month',
+    trend: 'up',
+    color: 'teal',
+    icon: 'currency',
+  },
+];
+
+export interface ChartDay {
+  day: string;
+  created: number;
+  completed: number;
+}
+
+export const weeklyJobsChart: ChartDay[] = [
+  { day: 'Mon', created: 6, completed: 4 },
+  { day: 'Tue', created: 8, completed: 5 },
+  { day: 'Wed', created: 5, completed: 7 },
+  { day: 'Thu', created: 9, completed: 6 },
+  { day: 'Fri', created: 7, completed: 8 },
+  { day: 'Sat', created: 4, completed: 3 },
+  { day: 'Sun', created: 2, completed: 2 },
+];
+
+export interface RepairJob {
+  reference: string;
+  customer: string;
+  equipment: string;
+  issue: string;
+  status: JobStatus;
+  technician: string;
+  dateReceived: string;
+}
+
+export const recentRepairJobs: RepairJob[] = [
+  {
+    reference: 'RJ-2041',
+    customer: 'Sarah Mitchell',
+    equipment: 'Dell XPS 15 Laptop',
+    issue: 'Screen replacement',
+    status: 'In Progress',
+    technician: 'James Carter',
+    dateReceived: '08 Oct 2026',
+  },
+  {
+    reference: 'RJ-2042',
+    customer: 'Marcus Webb',
+    equipment: 'Fender Hot Rod Amp',
+    issue: 'Guitar amplifier repair',
+    status: 'Awaiting Parts',
+    technician: 'Dana Fields',
+    dateReceived: '08 Oct 2026',
+  },
+  {
+    reference: 'RJ-2043',
+    customer: 'Priya Anand',
+    equipment: 'iPhone 13',
+    issue: 'Battery replacement',
+    status: 'Ready for Collection',
+    technician: 'James Carter',
+    dateReceived: '07 Oct 2026',
+  },
+  {
+    reference: 'RJ-2044',
+    customer: 'Tom Holloway',
+    equipment: 'Custom Desktop PC',
+    issue: 'Diagnostics - no boot',
+    status: 'Awaiting Diagnosis',
+    technician: 'Liam Osei',
+    dateReceived: '07 Oct 2026',
+  },
+  {
+    reference: 'RJ-2045',
+    customer: 'Grace Lin',
+    equipment: 'MacBook Air M2',
+    issue: 'Keyboard replacement',
+    status: 'Awaiting Approval',
+    technician: 'Dana Fields',
+    dateReceived: '06 Oct 2026',
+  },
+  {
+    reference: 'RJ-2046',
+    customer: 'Oliver Bennett',
+    equipment: 'Samsung Galaxy S22',
+    issue: 'Cracked screen',
+    status: 'Overdue',
+    technician: 'Liam Osei',
+    dateReceived: '03 Oct 2026',
+  },
+];
+
+export interface AttentionItem {
+  reference: string;
+  customer: string;
+  description: string;
+  status: JobStatus;
+  due: string;
+}
+
+export const attentionItems: AttentionItem[] = [
+  {
+    reference: 'RJ-2046',
+    customer: 'Oliver Bennett',
+    description: 'Cracked screen repair overdue',
+    status: 'Overdue',
+    due: 'Due 3 days ago',
+  },
+  {
+    reference: 'RJ-2044',
+    customer: 'Tom Holloway',
+    description: 'Desktop PC awaiting diagnosis',
+    status: 'Awaiting Diagnosis',
+    due: 'Waiting 2 days',
+  },
+  {
+    reference: 'RJ-2045',
+    customer: 'Grace Lin',
+    description: 'Quote awaiting customer approval',
+    status: 'Awaiting Approval',
+    due: 'Sent yesterday',
+  },
+  {
+    reference: 'RJ-2042',
+    customer: 'Marcus Webb',
+    description: 'Amplifier repair blocked by parts',
+    status: 'Awaiting Parts',
+    due: 'Part ETA 2 days',
+  },
+  {
+    reference: 'RJ-2043',
+    customer: 'Priya Anand',
+    description: 'Phone ready for collection',
+    status: 'Ready for Collection',
+    due: 'Ready since today',
+  },
+];
+
+export interface ScheduleItem {
+  time: string;
+  customer: string;
+  repairType: string;
+  technician: string;
+  status: 'Confirmed' | 'Drop-off' | 'Collection';
+}
+
+export const todaySchedule: ScheduleItem[] = [
+  { time: '09:00', customer: 'Sarah Mitchell', repairType: 'Laptop drop-off', technician: 'James Carter', status: 'Drop-off' },
+  { time: '10:30', customer: 'Priya Anand', repairType: 'Phone collection', technician: 'James Carter', status: 'Collection' },
+  { time: '11:15', customer: 'Noah Fischer', repairType: 'PC diagnostic review', technician: 'Liam Osei', status: 'Confirmed' },
+  { time: '13:00', customer: 'Grace Lin', repairType: 'Quote approval meeting', technician: 'Dana Fields', status: 'Confirmed' },
+  { time: '15:30', customer: 'Marcus Webb', repairType: 'Amplifier drop-off', technician: 'Dana Fields', status: 'Drop-off' },
+];

@@ -1,0 +1,17 @@
+.breadcrumbs {
+  margin-top: 2px;
+}
+
+.search {
+  width: 280px;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .search {
+    display: none;
+  }
+
+  .actions {
+    gap: var(--mantine-spacing-xs);
+  }
+}

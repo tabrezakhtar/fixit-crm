@@ -1,0 +1,8 @@
+.navbar {
+  background-color: var(--mantine-color-dark-7);
+  border-right: none;
+}
+
+.main {
+  background-color: var(--mantine-color-gray-0);
+}
