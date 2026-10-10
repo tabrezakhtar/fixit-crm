@@ -1,7 +1,37 @@
-import { Avatar, Breadcrumbs, Button, Group, Indicator, Text, TextInput } from '@mantine/core';
-import { IconBell, IconChevronRight, IconPlus, IconSearch } from '@tabler/icons-react';
+'use client';
+
+import {
+  ActionIcon,
+  Avatar,
+  Breadcrumbs,
+  Button,
+  Group,
+  Indicator,
+  Text,
+  TextInput,
+  useComputedColorScheme,
+  useMantineColorScheme,
+} from '@mantine/core';
+import { IconBell, IconChevronRight, IconMoon, IconPlus, IconSearch, IconSun } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
 import classes from './DashboardHeader.module.css';
+
+function ThemeToggle() {
+  const { setColorScheme } = useMantineColorScheme();
+  // Matches the SSR-rendered value until the real preference resolves on the client, avoiding hydration mismatches.
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+
+  return (
+    <ActionIcon
+      onClick={() => setColorScheme(computedColorScheme === 'dark' ? 'light' : 'dark')}
+      variant="default"
+      size="lg"
+      aria-label="Toggle color scheme"
+    >
+      {computedColorScheme === 'dark' ? <IconSun size={20} stroke={1.6} /> : <IconMoon size={20} stroke={1.6} />}
+    </ActionIcon>
+  );
+}
 
 export function DashboardHeader({ burger }: { burger?: ReactNode }) {
   return (
@@ -33,6 +63,7 @@ export function DashboardHeader({ burger }: { burger?: ReactNode }) {
         <Indicator color="red" size={8} offset={4}>
           <IconBell size={20} stroke={1.6} />
         </Indicator>
+        <ThemeToggle />
         <Avatar color="blue" radius="xl">
           AM
         </Avatar>

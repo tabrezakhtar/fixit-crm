@@ -1,6 +1,6 @@
 .row {
   padding: var(--mantine-spacing-xs) 0;
-  border-bottom: 1px solid var(--mantine-color-gray-2);
+  border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-4));
 }
 
 .row:last-child {
