@@ -3,6 +3,7 @@
 import { Card, Group, Stack, Table, Text, TextInput } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
+import classes from './DataTable.module.css';
 
 export interface CustomerGridRow {
   id: string;
@@ -19,8 +20,12 @@ export interface CustomerGridRow {
   country: string | null;
   notes: string | null;
   isActive: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: Date | string;
+  updatedAt: Date | string;
+}
+
+function formatUtcDate(value: Date | string) {
+  return `${new Date(value).toISOString().replace('T', ' ').slice(0, 16)} UTC`;
 }
 
 export function CustomersPage({ customers }: { customers: CustomerGridRow[] }) {
@@ -57,62 +62,71 @@ export function CustomersPage({ customers }: { customers: CustomerGridRow[] }) {
           />
         </Group>
 
-        <Table.ScrollContainer minWidth={1900} type="native">
-          <Table horizontalSpacing="md" verticalSpacing="sm" highlightOnHover>
-            <Table.Thead>
-              <Table.Tr>
-                <Table.Th ta="left">ID</Table.Th>
-                <Table.Th ta="left">First name</Table.Th>
-                <Table.Th ta="left">Last name</Table.Th>
-                <Table.Th ta="left">Email</Table.Th>
-                <Table.Th ta="left">Phone</Table.Th>
-                <Table.Th ta="left">Company</Table.Th>
-                <Table.Th ta="left">Address line 1</Table.Th>
-                <Table.Th ta="left">Address line 2</Table.Th>
-                <Table.Th ta="left">City</Table.Th>
-                <Table.Th ta="left">County</Table.Th>
-                <Table.Th ta="left">Postcode</Table.Th>
-                <Table.Th ta="left">Country</Table.Th>
-                <Table.Th ta="left">Notes</Table.Th>
-                <Table.Th ta="left">Active</Table.Th>
-                <Table.Th ta="left">Created at</Table.Th>
-                <Table.Th ta="left">Updated at</Table.Th>
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
+        <div className={classes.scrollContainer}>
+          <Table
+            className={classes.customerTable}
+            horizontalSpacing="lg"
+            verticalSpacing="md"
+            highlightOnHover
+          >
+            <thead>
+              <tr>
+                <th className={classes.headerCell}>ID</th>
+                <th className={classes.headerCell}>First name</th>
+                <th className={classes.headerCell}>Last name</th>
+                <th className={classes.headerCell}>Email</th>
+                <th className={classes.headerCell}>Phone</th>
+                <th className={classes.headerCell}>Company</th>
+                <th className={classes.headerCell}>Address line 1</th>
+                <th className={classes.headerCell}>Address line 2</th>
+                <th className={classes.headerCell}>City</th>
+                <th className={classes.headerCell}>County</th>
+                <th className={classes.headerCell}>Postcode</th>
+                <th className={classes.headerCell}>Country</th>
+                <th className={classes.headerCell}>Notes</th>
+                <th className={classes.headerCell}>Active</th>
+                <th className={classes.headerCell}>Created at</th>
+                <th className={classes.headerCell}>Updated at</th>
+              </tr>
+            </thead>
+            <tbody>
               {filteredCustomers.length > 0 ? (
                 filteredCustomers.map((customer) => (
-                  <Table.Tr key={customer.id}>
-                    <Table.Td>{customer.id}</Table.Td>
-                    <Table.Td>{customer.firstName}</Table.Td>
-                    <Table.Td>{customer.lastName}</Table.Td>
-                    <Table.Td>{customer.email}</Table.Td>
-                    <Table.Td>{customer.phone || '—'}</Table.Td>
-                    <Table.Td>{customer.company || '—'}</Table.Td>
-                    <Table.Td>{customer.addressLine1 || '—'}</Table.Td>
-                    <Table.Td>{customer.addressLine2 || '—'}</Table.Td>
-                    <Table.Td>{customer.city || '—'}</Table.Td>
-                    <Table.Td>{customer.county || '—'}</Table.Td>
-                    <Table.Td>{customer.postcode || '—'}</Table.Td>
-                    <Table.Td>{customer.country || '—'}</Table.Td>
-                    <Table.Td><Text size="sm" lineClamp={2}>{customer.notes || '—'}</Text></Table.Td>
-                    <Table.Td>{customer.isActive ? 'Active' : 'Inactive'}</Table.Td>
-                    <Table.Td>{customer.createdAt.toLocaleString()}</Table.Td>
-                    <Table.Td>{customer.updatedAt.toLocaleString()}</Table.Td>
-                  </Table.Tr>
+                  <tr key={customer.id}>
+                    <td className={classes.cell}>{customer.id}</td>
+                    <td className={classes.cell}>{customer.firstName}</td>
+                    <td className={classes.cell}>{customer.lastName}</td>
+                    <td className={classes.cell}>{customer.email}</td>
+                    <td className={classes.cell}>{customer.phone || '—'}</td>
+                    <td className={classes.cell}>{customer.company || '—'}</td>
+                    <td className={classes.cell}>{customer.addressLine1 || '—'}</td>
+                    <td className={classes.cell}>{customer.addressLine2 || '—'}</td>
+                    <td className={classes.cell}>{customer.city || '—'}</td>
+                    <td className={classes.cell}>{customer.county || '—'}</td>
+                    <td className={classes.cell}>{customer.postcode || '—'}</td>
+                    <td className={classes.cell}>{customer.country || '—'}</td>
+                    <td className={classes.notesCell}><Text size="sm" lineClamp={2}>{customer.notes || '—'}</Text></td>
+                    <td className={classes.cell}>
+                      <span className={customer.isActive ? classes.activeStatus : classes.inactiveStatus}>
+                        {customer.isActive ? 'Active' : 'Inactive'}
+                      </span>
+                    </td>
+                    <td className={classes.cell}>{formatUtcDate(customer.createdAt)}</td>
+                    <td className={classes.cell}>{formatUtcDate(customer.updatedAt)}</td>
+                  </tr>
                 ))
               ) : (
-                <Table.Tr>
-                  <Table.Td colSpan={16}>
+                <tr>
+                  <td colSpan={16}>
                     <Text ta="center" c="dimmed" py="lg">
                       {customers.length === 0 ? 'No customers found.' : 'No customers match your search.'}
                     </Text>
-                  </Table.Td>
-                </Table.Tr>
+                  </td>
+                </tr>
               )}
-            </Table.Tbody>
+            </tbody>
           </Table>
-        </Table.ScrollContainer>
+        </div>
       </Card>
     </Stack>
   );

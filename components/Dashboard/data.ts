@@ -120,8 +120,8 @@ export const recentRepairJobs: RepairJob[] = [
   {
     reference: 'RJ-2042',
     customer: 'Marcus Webb',
-    equipment: 'Fender Hot Rod Amp',
-    issue: 'Guitar amplifier repair',
+    equipment: 'Lenovo ThinkPad X1 Carbon',
+    issue: 'Laptop charging port repair',
     status: 'Awaiting Parts',
     technician: 'Dana Fields',
     dateReceived: '08 Oct 2026',
@@ -138,8 +138,8 @@ export const recentRepairJobs: RepairJob[] = [
   {
     reference: 'RJ-2044',
     customer: 'Tom Holloway',
-    equipment: 'Custom Desktop PC',
-    issue: 'Diagnostics - no boot',
+    equipment: 'Google Pixel 8',
+    issue: 'Phone diagnostics - no power',
     status: 'Awaiting Diagnosis',
     technician: 'Liam Osei',
     dateReceived: '07 Oct 2026',
@@ -148,7 +148,7 @@ export const recentRepairJobs: RepairJob[] = [
     reference: 'RJ-2045',
     customer: 'Grace Lin',
     equipment: 'MacBook Air M2',
-    issue: 'Keyboard replacement',
+    issue: 'Laptop keyboard replacement',
     status: 'Awaiting Approval',
     technician: 'Dana Fields',
     dateReceived: '06 Oct 2026',
@@ -156,8 +156,8 @@ export const recentRepairJobs: RepairJob[] = [
   {
     reference: 'RJ-2046',
     customer: 'Oliver Bennett',
-    equipment: 'Samsung Galaxy S22',
-    issue: 'Cracked screen',
+    equipment: 'iPhone 14',
+    issue: 'Phone screen replacement',
     status: 'Overdue',
     technician: 'Liam Osei',
     dateReceived: '03 Oct 2026',
@@ -172,15 +172,15 @@ export interface Customer {
   lastVisit: string;
 }
 
-export const customers: Customer[] = [
-  { name: 'Sarah Mitchell', email: 'sarah.mitchell@example.com', phone: '07700 900101', repairJobs: 3, lastVisit: '08 Oct 2026' },
-  { name: 'Marcus Webb', email: 'marcus.webb@example.com', phone: '07700 900102', repairJobs: 2, lastVisit: '08 Oct 2026' },
-  { name: 'Priya Anand', email: 'priya.anand@example.com', phone: '07700 900103', repairJobs: 4, lastVisit: '07 Oct 2026' },
-  { name: 'Tom Holloway', email: 'tom.holloway@example.com', phone: '07700 900104', repairJobs: 1, lastVisit: '07 Oct 2026' },
-  { name: 'Grace Lin', email: 'grace.lin@example.com', phone: '07700 900105', repairJobs: 2, lastVisit: '06 Oct 2026' },
-  { name: 'Oliver Bennett', email: 'oliver.bennett@example.com', phone: '07700 900106', repairJobs: 1, lastVisit: '03 Oct 2026' },
-  { name: 'Noah Fischer', email: 'noah.fischer@example.com', phone: '07700 900107', repairJobs: 2, lastVisit: '01 Oct 2026' },
-];
+// export const customers: Customer[] = [
+//   { name: 'Sarah Mitchell', email: 'sarah.mitchell@example.com', phone: '07700 900101', repairJobs: 3, lastVisit: '08 Oct 2026' },
+//   { name: 'Marcus Webb', email: 'marcus.webb@example.com', phone: '07700 900102', repairJobs: 2, lastVisit: '08 Oct 2026' },
+//   { name: 'Priya Anand', email: 'priya.anand@example.com', phone: '07700 900103', repairJobs: 4, lastVisit: '07 Oct 2026' },
+//   { name: 'Tom Holloway', email: 'tom.holloway@example.com', phone: '07700 900104', repairJobs: 1, lastVisit: '07 Oct 2026' },
+//   { name: 'Grace Lin', email: 'grace.lin@example.com', phone: '07700 900105', repairJobs: 2, lastVisit: '06 Oct 2026' },
+//   { name: 'Oliver Bennett', email: 'oliver.bennett@example.com', phone: '07700 900106', repairJobs: 1, lastVisit: '03 Oct 2026' },
+//   { name: 'Noah Fischer', email: 'noah.fischer@example.com', phone: '07700 900107', repairJobs: 2, lastVisit: '01 Oct 2026' },
+// ];
 
 export interface AttentionItem {
   reference: string;

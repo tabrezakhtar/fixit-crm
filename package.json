@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
+    "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "lint": "npm run oxlint && npm run stylelint",
     "oxlint": "oxlint -c oxlint.config.mjs .",
@@ -57,6 +58,7 @@
     "stylelint": "^17.0.0",
     "stylelint-config-standard-scss": "^17.0.0",
     "ts-jest": "^29.4.4",
+    "tsx": "^4.23.15",
     "typescript": "7.0.2"
   },
   "packageManager": "pnpm@9.0.0"

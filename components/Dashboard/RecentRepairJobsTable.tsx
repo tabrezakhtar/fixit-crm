@@ -2,6 +2,7 @@ import { ActionIcon, Anchor, Card, Group, Select, Table, Text, TextInput } from 
 import { IconDotsVertical, IconSearch } from '@tabler/icons-react';
 import { recentRepairJobs } from './data';
 import { StatusBadge } from './StatusBadge';
+import classes from './DataTable.module.css';
 
 export function RecentRepairJobsTable() {
   return (
@@ -30,37 +31,42 @@ export function RecentRepairJobsTable() {
         />
       </Group>
 
-      <div style={{ overflowX: 'auto' }}>
-        <Table verticalSpacing="sm" highlightOnHover miw={700}>
+      <div className={classes.scrollContainer}>
+        <Table
+          className={classes.repairTable}
+          horizontalSpacing="lg"
+          verticalSpacing="md"
+          highlightOnHover
+        >
           <thead>
             <tr>
-              <th>Job Reference</th>
-              <th>Customer</th>
-              <th>Equipment</th>
-              <th>Issue</th>
-              <th>Status</th>
-              <th>Technician</th>
-              <th>Date Received</th>
-              <th />
+              <th className={classes.headerCell}>Job Reference</th>
+              <th className={classes.headerCell}>Customer</th>
+              <th className={classes.headerCell}>Equipment</th>
+              <th className={classes.headerCell}>Issue</th>
+              <th className={classes.headerCell}>Status</th>
+              <th className={classes.headerCell}>Technician</th>
+              <th className={classes.headerCell}>Date Received</th>
+              <th className={classes.headerCell} />
             </tr>
           </thead>
           <tbody>
             {recentRepairJobs.map((job) => (
               <tr key={job.reference}>
-                <td>
+                <td className={classes.cell}>
                   <Text size="sm" fw={600}>
                     {job.reference}
                   </Text>
                 </td>
-                <td>{job.customer}</td>
-                <td>{job.equipment}</td>
-                <td>{job.issue}</td>
-                <td>
+                <td className={classes.cell}>{job.customer}</td>
+                <td className={classes.cell}>{job.equipment}</td>
+                <td className={classes.cell}>{job.issue}</td>
+                <td className={classes.cell}>
                   <StatusBadge status={job.status} />
                 </td>
-                <td>{job.technician}</td>
-                <td>{job.dateReceived}</td>
-                <td>
+                <td className={classes.cell}>{job.technician}</td>
+                <td className={classes.cell}>{job.dateReceived}</td>
+                <td className={classes.cell}>
                   <ActionIcon variant="subtle" color="gray">
                     <IconDotsVertical size={16} />
                   </ActionIcon>
