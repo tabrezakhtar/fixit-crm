@@ -1,6 +1,7 @@
 'use client';
 
 import {
+  Box,
   ActionIcon,
   Avatar,
   Breadcrumbs,
@@ -18,7 +19,6 @@ import classes from './DashboardHeader.module.css';
 
 function ThemeToggle() {
   const { setColorScheme } = useMantineColorScheme();
-  // Matches the SSR-rendered value until the real preference resolves on the client, avoiding hydration mismatches.
   const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
 
   return (
@@ -28,7 +28,8 @@ function ThemeToggle() {
       size="lg"
       aria-label="Toggle color scheme"
     >
-      {computedColorScheme === 'dark' ? <IconSun size={20} stroke={1.6} /> : <IconMoon size={20} stroke={1.6} />}
+      <Box darkHidden><IconMoon size={20} stroke={1.6} /></Box>
+      <Box lightHidden><IconSun size={20} stroke={1.6} /></Box>
     </ActionIcon>
   );
 }

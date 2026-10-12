@@ -23,13 +23,14 @@ export type JobStatus =
 export interface NavItem {
   label: string;
   icon: typeof IconDashboard;
+  href?: string;
   active?: boolean;
 }
 
 export const primaryNavItems: NavItem[] = [
-  { label: 'Dashboard', icon: IconDashboard, active: true },
+  { label: 'Dashboard', icon: IconDashboard, href: '/dashboard' },
   { label: 'Repair Jobs', icon: IconTool },
-  { label: 'Customers', icon: IconUsers },
+  { label: 'Customers', icon: IconUsers, href: '/dashboard/customers' },
   { label: 'Equipment', icon: IconDeviceLaptop },
   { label: 'Appointments & Schedule', icon: IconCalendarEvent },
   { label: 'Quotes & Estimates', icon: IconFileInvoice },
@@ -161,6 +162,24 @@ export const recentRepairJobs: RepairJob[] = [
     technician: 'Liam Osei',
     dateReceived: '03 Oct 2026',
   },
+];
+
+export interface Customer {
+  name: string;
+  email: string;
+  phone: string;
+  repairJobs: number;
+  lastVisit: string;
+}
+
+export const customers: Customer[] = [
+  { name: 'Sarah Mitchell', email: 'sarah.mitchell@example.com', phone: '07700 900101', repairJobs: 3, lastVisit: '08 Oct 2026' },
+  { name: 'Marcus Webb', email: 'marcus.webb@example.com', phone: '07700 900102', repairJobs: 2, lastVisit: '08 Oct 2026' },
+  { name: 'Priya Anand', email: 'priya.anand@example.com', phone: '07700 900103', repairJobs: 4, lastVisit: '07 Oct 2026' },
+  { name: 'Tom Holloway', email: 'tom.holloway@example.com', phone: '07700 900104', repairJobs: 1, lastVisit: '07 Oct 2026' },
+  { name: 'Grace Lin', email: 'grace.lin@example.com', phone: '07700 900105', repairJobs: 2, lastVisit: '06 Oct 2026' },
+  { name: 'Oliver Bennett', email: 'oliver.bennett@example.com', phone: '07700 900106', repairJobs: 1, lastVisit: '03 Oct 2026' },
+  { name: 'Noah Fischer', email: 'noah.fischer@example.com', phone: '07700 900107', repairJobs: 2, lastVisit: '01 Oct 2026' },
 ];
 
 export interface AttentionItem {
