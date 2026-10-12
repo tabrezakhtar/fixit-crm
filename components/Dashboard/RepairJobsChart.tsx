@@ -1,8 +1,10 @@
-import { Card, Group, Select, Text } from '@mantine/core';
+'use client';
+
+import { Card, Center, Group, Loader, Select, Text } from '@mantine/core';
 import type { ChartDay } from './data';
 import classes from './RepairJobsChart.module.css';
 
-export function RepairJobsChart({ data }: { data: ChartDay[] }) {
+export function RepairJobsChart({ data, loading }: { data: ChartDay[]; loading: boolean }) {
   const maxValue = Math.max(1, ...data.flatMap((day) => [day.created, day.readyForCollection]));
 
   return (
@@ -38,8 +40,11 @@ export function RepairJobsChart({ data }: { data: ChartDay[] }) {
         </Group>
       </Group>
 
-      <Group align="flex-end" gap="md" className={classes.chart}>
-        {data.map((d) => (
+      {loading ? (
+        <Center h={180}><Loader size="sm" aria-label="Loading repair job chart" /></Center>
+      ) : (
+        <Group align="flex-end" gap="md" className={classes.chart}>
+          {data.map((d) => (
           <div key={d.day} className={classes.column}>
             <Group align="flex-end" gap={4} className={classes.bars}>
               <div
@@ -57,8 +62,9 @@ export function RepairJobsChart({ data }: { data: ChartDay[] }) {
               {d.day}
             </Text>
           </div>
-        ))}
-      </Group>
+          ))}
+        </Group>
+      )}
     </Card>
   );
 }

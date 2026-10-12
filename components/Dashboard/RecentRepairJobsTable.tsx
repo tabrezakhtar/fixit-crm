@@ -1,10 +1,12 @@
-import { ActionIcon, Anchor, Card, Group, Select, Table, Text, TextInput } from '@mantine/core';
+'use client';
+
+import { ActionIcon, Anchor, Card, Center, Group, Loader, Select, Table, Text, TextInput } from '@mantine/core';
 import { IconDotsVertical, IconSearch } from '@tabler/icons-react';
 import type { RepairJob } from './data';
 import { StatusBadge } from './StatusBadge';
 import classes from './DataTable.module.css';
 
-export function RecentRepairJobsTable({ jobs }: { jobs: RepairJob[] }) {
+export function RecentRepairJobsTable({ jobs, loading }: { jobs: RepairJob[]; loading: boolean }) {
   return (
     <Card withBorder radius="md" padding="lg">
       <Group justify="space-between" mb="md">
@@ -32,6 +34,9 @@ export function RecentRepairJobsTable({ jobs }: { jobs: RepairJob[] }) {
       </Group>
 
       <div className={classes.scrollContainer}>
+        {loading ? (
+          <Center h={220}><Loader size="sm" aria-label="Loading repair jobs" /></Center>
+        ) : (
         <Table
           className={classes.repairTable}
           horizontalSpacing="lg"
@@ -81,6 +86,7 @@ export function RecentRepairJobsTable({ jobs }: { jobs: RepairJob[] }) {
             ))}
           </tbody>
         </Table>
+        )}
       </div>
     </Card>
   );

@@ -1,4 +1,6 @@
-import { Card, Group, Stack, Text, ThemeIcon } from '@mantine/core';
+'use client';
+
+import { Card, Center, Group, Loader, Stack, Text, ThemeIcon } from '@mantine/core';
 import { IconAlertTriangle, IconCircleCheck, IconClock, IconFileText, IconPackage } from '@tabler/icons-react';
 import type { AttentionItem, JobStatus } from './data';
 
@@ -20,13 +22,15 @@ const COLORS: Record<JobStatus, string> = {
   'In Progress': 'blue',
 };
 
-export function AttentionRequired({ items }: { items: AttentionItem[] }) {
+export function AttentionRequired({ items, loading }: { items: AttentionItem[]; loading: boolean }) {
   return (
     <Card withBorder radius="md" padding="lg">
       <Text fw={600} mb="md">
         Jobs Requiring Attention
       </Text>
-      <Stack gap="sm">
+      {loading ? (
+        <Center h={180}><Loader size="sm" aria-label="Loading jobs requiring attention" /></Center>
+      ) : <Stack gap="sm">
         {items.length === 0 ? (
           <Text size="sm" c="dimmed">No jobs currently need attention.</Text>
         ) : items.map((item) => {
@@ -52,7 +56,7 @@ export function AttentionRequired({ items }: { items: AttentionItem[] }) {
             </Group>
           );
         })}
-      </Stack>
+      </Stack>}
     </Card>
   );
 }

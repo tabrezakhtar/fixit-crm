@@ -1,6 +1,7 @@
 import 'server-only';
 import { AppointmentStatus, RepairJobStatus } from '../generated/prisma/client';
 import { prisma } from './prisma';
+import { dashboardStatusCards } from '../components/Dashboard/data';
 import type {
   AttentionItem,
   ChartDay,
@@ -25,34 +26,14 @@ const appointmentStatusLabels: Record<AppointmentStatus, ScheduleItem['status']>
   [AppointmentStatus.Collection]: 'Collection',
 };
 
-const statusCards: Array<{
-  label: string;
-  status: RepairJobStatus;
-  color: string;
-  icon: string;
-}> = [
-  { label: 'Jobs In Progress', status: RepairJobStatus.InProgress, color: 'blue', icon: 'tool' },
-  {
-    label: 'Awaiting Diagnosis',
-    status: RepairJobStatus.AwaitingDiagnosis,
-    color: 'indigo',
-    icon: 'stethoscope',
-  },
-  { label: 'Awaiting Parts', status: RepairJobStatus.AwaitingParts, color: 'yellow', icon: 'box' },
-  {
-    label: 'Awaiting Approval',
-    status: RepairJobStatus.AwaitingApproval,
-    color: 'grape',
-    icon: 'approval',
-  },
-  {
-    label: 'Ready for Collection',
-    status: RepairJobStatus.ReadyForCollection,
-    color: 'green',
-    icon: 'check',
-  },
-  { label: 'Overdue Jobs', status: RepairJobStatus.Overdue, color: 'red', icon: 'alert' },
-];
+const jobStatusValues: Record<JobStatus, RepairJobStatus> = {
+  'In Progress': RepairJobStatus.InProgress,
+  'Awaiting Diagnosis': RepairJobStatus.AwaitingDiagnosis,
+  'Awaiting Parts': RepairJobStatus.AwaitingParts,
+  'Awaiting Approval': RepairJobStatus.AwaitingApproval,
+  'Ready for Collection': RepairJobStatus.ReadyForCollection,
+  Overdue: RepairJobStatus.Overdue,
+};
 
 function utcDateKey(date: Date): string {
   return date.toISOString().slice(0, 10);
@@ -106,9 +87,9 @@ export async function getDashboardData() {
   ]);
 
   const counts = new Map(statusCounts.map(({ status, _count }) => [status, _count._all]));
-  const summaryCards: SummaryCardData[] = statusCards.map(({ label, status, color, icon }) => ({
+  const summaryCards: SummaryCardData[] = dashboardStatusCards.map(({ label, status, color, icon }) => ({
     label,
-    value: String(counts.get(status) ?? 0),
+    value: String(counts.get(jobStatusValues[status]) ?? 0),
     delta: 'Current jobs',
     trend: 'flat',
     color,

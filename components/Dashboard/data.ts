@@ -51,6 +51,20 @@ export interface SummaryCardData {
   icon: string;
 }
 
+export const dashboardStatusCards: Array<{
+  label: string;
+  status: JobStatus;
+  color: string;
+  icon: string;
+}> = [
+  { label: 'Jobs In Progress', status: 'In Progress', color: 'blue', icon: 'tool' },
+  { label: 'Awaiting Diagnosis', status: 'Awaiting Diagnosis', color: 'indigo', icon: 'stethoscope' },
+  { label: 'Awaiting Parts', status: 'Awaiting Parts', color: 'yellow', icon: 'box' },
+  { label: 'Awaiting Approval', status: 'Awaiting Approval', color: 'grape', icon: 'approval' },
+  { label: 'Ready for Collection', status: 'Ready for Collection', color: 'green', icon: 'check' },
+  { label: 'Overdue Jobs', status: 'Overdue', color: 'red', icon: 'alert' },
+];
+
 export interface ChartDay {
   day: string;
   created: number;

@@ -1,4 +1,6 @@
-import { Badge, Card, Group, Stack, Text } from '@mantine/core';
+'use client';
+
+import { Badge, Card, Center, Group, Loader, Stack, Text } from '@mantine/core';
 import type { ScheduleItem } from './data';
 import classes from './TodaySchedule.module.css';
 
@@ -8,13 +10,15 @@ const STATUS_COLORS: Record<string, string> = {
   Collection: 'green',
 };
 
-export function TodaySchedule({ items }: { items: ScheduleItem[] }) {
+export function TodaySchedule({ items, loading }: { items: ScheduleItem[]; loading: boolean }) {
   return (
     <Card withBorder radius="md" padding="lg">
       <Text fw={600} mb="md">
         Today&apos;s Schedule
       </Text>
-      <Stack gap={0} className={classes.timeline}>
+      {loading ? (
+        <Center h={180}><Loader size="sm" aria-label="Loading today's schedule" /></Center>
+      ) : <Stack gap={0} className={classes.timeline}>
         {items.length === 0 ? (
           <Text size="sm" c="dimmed">No appointments scheduled today.</Text>
         ) : items.map((item) => (
@@ -35,7 +39,7 @@ export function TodaySchedule({ items }: { items: ScheduleItem[] }) {
             </Badge>
           </Group>
         ))}
-      </Stack>
+      </Stack>}
     </Card>
   );
 }
