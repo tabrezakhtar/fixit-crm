@@ -5,8 +5,8 @@ import { mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
 
 export const metadata = {
-  title: 'Mantine Next.js template',
-  description: 'I am using Mantine with Next.js!',
+  title: 'FixitCRM',
+  description: 'CRM for repair shops',
 };
 
 export default function RootLayout({ children }: { children: any }) {
