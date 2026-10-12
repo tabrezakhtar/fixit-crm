@@ -1,6 +1,6 @@
 import { Card, Group, Stack, Text, ThemeIcon } from '@mantine/core';
 import { IconAlertTriangle, IconCircleCheck, IconClock, IconFileText, IconPackage } from '@tabler/icons-react';
-import { attentionItems, type JobStatus } from './data';
+import type { AttentionItem, JobStatus } from './data';
 
 const ICONS: Record<JobStatus, typeof IconAlertTriangle> = {
   Overdue: IconAlertTriangle,
@@ -20,14 +20,16 @@ const COLORS: Record<JobStatus, string> = {
   'In Progress': 'blue',
 };
 
-export function AttentionRequired() {
+export function AttentionRequired({ items }: { items: AttentionItem[] }) {
   return (
     <Card withBorder radius="md" padding="lg">
       <Text fw={600} mb="md">
         Jobs Requiring Attention
       </Text>
       <Stack gap="sm">
-        {attentionItems.map((item) => {
+        {items.length === 0 ? (
+          <Text size="sm" c="dimmed">No jobs currently need attention.</Text>
+        ) : items.map((item) => {
           const Icon = ICONS[item.status];
           return (
             <Group key={item.reference} wrap="nowrap" align="flex-start">

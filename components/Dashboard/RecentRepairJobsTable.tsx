@@ -1,10 +1,10 @@
 import { ActionIcon, Anchor, Card, Group, Select, Table, Text, TextInput } from '@mantine/core';
 import { IconDotsVertical, IconSearch } from '@tabler/icons-react';
-import { recentRepairJobs } from './data';
+import type { RepairJob } from './data';
 import { StatusBadge } from './StatusBadge';
 import classes from './DataTable.module.css';
 
-export function RecentRepairJobsTable() {
+export function RecentRepairJobsTable({ jobs }: { jobs: RepairJob[] }) {
   return (
     <Card withBorder radius="md" padding="lg">
       <Group justify="space-between" mb="md">
@@ -51,7 +51,13 @@ export function RecentRepairJobsTable() {
             </tr>
           </thead>
           <tbody>
-            {recentRepairJobs.map((job) => (
+            {jobs.length === 0 ? (
+              <tr>
+                <td className={classes.cell} colSpan={8}>
+                  <Text size="sm" c="dimmed" ta="center">No repair jobs found.</Text>
+                </td>
+              </tr>
+            ) : jobs.map((job) => (
               <tr key={job.reference}>
                 <td className={classes.cell}>
                   <Text size="sm" fw={600}>

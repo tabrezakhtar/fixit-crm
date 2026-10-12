@@ -4,10 +4,18 @@ import { DashboardWelcome } from './DashboardWelcome';
 import { RecentRepairJobsTable } from './RecentRepairJobsTable';
 import { RepairJobsChart } from './RepairJobsChart';
 import { StatCard } from './StatCard';
-import { summaryCards } from './data';
 import { TodaySchedule } from './TodaySchedule';
+import type { getDashboardData } from '../../lib/dashboard';
 
-export function DashboardPage() {
+type DashboardData = Awaited<ReturnType<typeof getDashboardData>>;
+
+export function DashboardPage({
+  summaryCards,
+  chart,
+  attentionItems,
+  recentRepairJobs,
+  todaySchedule,
+}: DashboardData) {
   return (
     <Stack gap="lg">
       <DashboardWelcome />
@@ -20,19 +28,19 @@ export function DashboardPage() {
 
       <Grid>
         <GridCol span={{ base: 12, lg: 8 }}>
-          <RepairJobsChart />
+          <RepairJobsChart data={chart} />
         </GridCol>
         <GridCol span={{ base: 12, lg: 4 }}>
-          <AttentionRequired />
+          <AttentionRequired items={attentionItems} />
         </GridCol>
       </Grid>
 
       <Grid>
         <GridCol span={{ base: 12, lg: 8 }}>
-          <RecentRepairJobsTable />
+          <RecentRepairJobsTable jobs={recentRepairJobs} />
         </GridCol>
         <GridCol span={{ base: 12, lg: 4 }}>
-          <TodaySchedule />
+          <TodaySchedule items={todaySchedule} />
         </GridCol>
       </Grid>
     </Stack>

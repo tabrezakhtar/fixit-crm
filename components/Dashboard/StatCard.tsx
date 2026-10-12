@@ -4,6 +4,7 @@ import {
   IconBox,
   IconCircleCheck,
   IconCurrencyPound,
+  IconFileInvoice,
   IconStethoscope,
   IconTool,
   IconTrendingDown,
@@ -19,6 +20,7 @@ const ICONS: Record<string, typeof IconTool> = {
   check: IconCircleCheck,
   alert: IconAlertTriangle,
   currency: IconCurrencyPound,
+  approval: IconFileInvoice,
 };
 
 export function StatCard({ label, value, delta, trend, color, icon }: SummaryCardData) {

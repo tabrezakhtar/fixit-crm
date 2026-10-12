@@ -51,51 +51,11 @@ export interface SummaryCardData {
   icon: string;
 }
 
-export const summaryCards: SummaryCardData[] = [
-  { label: 'Jobs In Progress', value: '18', delta: '+3 today', trend: 'up', color: 'blue', icon: 'tool' },
-  {
-    label: 'Awaiting Diagnosis',
-    value: '5',
-    delta: '2 new',
-    trend: 'flat',
-    color: 'indigo',
-    icon: 'stethoscope',
-  },
-  { label: 'Awaiting Parts', value: '7', delta: '1 overdue', trend: 'down', color: 'yellow', icon: 'box' },
-  {
-    label: 'Ready for Collection',
-    value: '4',
-    delta: 'Ready now',
-    trend: 'up',
-    color: 'green',
-    icon: 'check',
-  },
-  { label: 'Overdue Jobs', value: '3', delta: 'Needs attention', trend: 'down', color: 'red', icon: 'alert' },
-  {
-    label: 'Revenue This Month',
-    value: '£12,450',
-    delta: '+8% vs last month',
-    trend: 'up',
-    color: 'teal',
-    icon: 'currency',
-  },
-];
-
 export interface ChartDay {
   day: string;
   created: number;
-  completed: number;
+  readyForCollection: number;
 }
-
-export const weeklyJobsChart: ChartDay[] = [
-  { day: 'Mon', created: 6, completed: 4 },
-  { day: 'Tue', created: 8, completed: 5 },
-  { day: 'Wed', created: 5, completed: 7 },
-  { day: 'Thu', created: 9, completed: 6 },
-  { day: 'Fri', created: 7, completed: 8 },
-  { day: 'Sat', created: 4, completed: 3 },
-  { day: 'Sun', created: 2, completed: 2 },
-];
 
 export interface RepairJob {
   reference: string;
@@ -190,44 +150,6 @@ export interface AttentionItem {
   due: string;
 }
 
-export const attentionItems: AttentionItem[] = [
-  {
-    reference: 'RJ-2046',
-    customer: 'Oliver Bennett',
-    description: 'Cracked screen repair overdue',
-    status: 'Overdue',
-    due: 'Due 3 days ago',
-  },
-  {
-    reference: 'RJ-2044',
-    customer: 'Tom Holloway',
-    description: 'Desktop PC awaiting diagnosis',
-    status: 'Awaiting Diagnosis',
-    due: 'Waiting 2 days',
-  },
-  {
-    reference: 'RJ-2045',
-    customer: 'Grace Lin',
-    description: 'Quote awaiting customer approval',
-    status: 'Awaiting Approval',
-    due: 'Sent yesterday',
-  },
-  {
-    reference: 'RJ-2042',
-    customer: 'Marcus Webb',
-    description: 'Amplifier repair blocked by parts',
-    status: 'Awaiting Parts',
-    due: 'Part ETA 2 days',
-  },
-  {
-    reference: 'RJ-2043',
-    customer: 'Priya Anand',
-    description: 'Phone ready for collection',
-    status: 'Ready for Collection',
-    due: 'Ready since today',
-  },
-];
-
 export interface ScheduleItem {
   time: string;
   customer: string;
@@ -243,3 +165,4 @@ export const todaySchedule: ScheduleItem[] = [
   { time: '13:00', customer: 'Grace Lin', repairType: 'Quote approval meeting', technician: 'Dana Fields', status: 'Confirmed' },
   { time: '15:30', customer: 'Marcus Webb', repairType: 'Amplifier drop-off', technician: 'Dana Fields', status: 'Drop-off' },
 ];
+
