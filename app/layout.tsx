@@ -1,7 +1,7 @@
 import '@mantine/core/styles.css';
 
 import React from 'react';
-import { mantineHtmlProps, MantineProvider } from '@mantine/core';
+import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/core';
 import { theme } from '../theme';
 
 export const metadata = {
@@ -13,6 +13,7 @@ export default function RootLayout({ children }: { children: any }) {
   return (
     <html lang="en" {...mantineHtmlProps} suppressHydrationWarning>
       <head>
+        <ColorSchemeScript defaultColorScheme="auto" />
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
@@ -20,7 +21,9 @@ export default function RootLayout({ children }: { children: any }) {
         />
       </head>
       <body>
-        <MantineProvider theme={theme}>{children}</MantineProvider>
+        <MantineProvider theme={theme} defaultColorScheme="auto">
+          {children}
+        </MantineProvider>
       </body>
     </html>
   );

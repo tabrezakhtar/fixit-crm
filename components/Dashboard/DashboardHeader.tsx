@@ -19,7 +19,7 @@ import classes from './DashboardHeader.module.css';
 
 function ThemeToggle() {
   const { setColorScheme } = useMantineColorScheme();
-  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: true });
+  const computedColorScheme = useComputedColorScheme('light', { getInitialValueInEffect: false });
 
   return (
     <ActionIcon
