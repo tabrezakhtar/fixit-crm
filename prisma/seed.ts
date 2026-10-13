@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { AppointmentStatus, PrismaClient, RepairJobStatus } from '../generated/prisma/client';
-import { recentRepairJobs, todaySchedule, type JobStatus } from '../components/Dashboard/data';
-import { customers } from './seed-data';
+import { AppointmentStatus, PrismaClient } from '../generated/prisma/client';
+import { todaySchedule } from '../components/Dashboard/data';
+import { customers, repairJobs } from './seed-data';
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -11,15 +11,6 @@ if (!connectionString) {
 }
 
 const prisma = new PrismaClient({ adapter: new PrismaPg({ connectionString }) });
-
-const jobStatuses = {
-  'In Progress': RepairJobStatus.InProgress,
-  'Awaiting Diagnosis': RepairJobStatus.AwaitingDiagnosis,
-  'Awaiting Parts': RepairJobStatus.AwaitingParts,
-  'Awaiting Approval': RepairJobStatus.AwaitingApproval,
-  'Ready for Collection': RepairJobStatus.ReadyForCollection,
-  Overdue: RepairJobStatus.Overdue,
-} satisfies Record<JobStatus, RepairJobStatus>;
 
 const appointmentStatuses = {
   Confirmed: AppointmentStatus.Confirmed,
@@ -61,7 +52,7 @@ function appointmentDate(time: string): Date {
 async function seed() {
   const technicianNames = Array.from(
     new Set([
-      ...recentRepairJobs.map((job) => job.technician),
+      ...repairJobs.map((job) => job.technician),
       ...todaySchedule.map((appointment) => appointment.technician),
     ])
   );
@@ -89,12 +80,12 @@ async function seed() {
     );
 
     await transaction.repairJob.createMany({
-      data: recentRepairJobs.map((job) => ({
+      data: repairJobs.map((job) => ({
         reference: job.reference,
         customerId: getCustomerId(job.customer),
         equipment: job.equipment,
         issue: job.issue,
-        status: jobStatuses[job.status],
+        status: job.status,
         technicianId: technicianIds.get(job.technician),
         dateReceived: parseReceivedDate(job.dateReceived),
       })),
@@ -112,7 +103,7 @@ async function seed() {
   });
 
   console.log(
-    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${recentRepairJobs.length} repair jobs, and ${todaySchedule.length} appointments.`
+    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, and ${todaySchedule.length} appointments.`
   );
 }
 
