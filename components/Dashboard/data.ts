@@ -29,9 +29,9 @@ export interface NavItem {
 
 export const primaryNavItems: NavItem[] = [
   { label: 'Dashboard', icon: IconDashboard, href: '/dashboard' },
-  { label: 'Repair Jobs', icon: IconTool },
+  { label: 'Repair Jobs', icon: IconTool, href: '/dashboard/repair-jobs' },
   { label: 'Customers', icon: IconUsers, href: '/dashboard/customers' },
-  { label: 'Equipment', icon: IconDeviceLaptop },
+  { label: 'Equipment', icon: IconDeviceLaptop, href: '/dashboard/equipment' },
   { label: 'Appointments & Schedule', icon: IconCalendarEvent },
   { label: 'Quotes & Estimates', icon: IconFileInvoice },
   { label: 'Parts & Inventory', icon: IconBox },
@@ -79,6 +79,25 @@ export interface RepairJob {
   status: JobStatus;
   technician: string;
   dateReceived: string;
+}
+
+export interface RepairJobListItem extends RepairJob {
+  customerEmail: string;
+}
+
+export type EquipmentCategory = 'Laptop' | 'Phone' | 'Other';
+
+export interface EquipmentModel {
+  name: string;
+  category: EquipmentCategory;
+  repairCount: number;
+  latestRepair: {
+    reference: string;
+    customer: string;
+    issue: string;
+    status: JobStatus;
+    dateReceived: string;
+  };
 }
 
 export const recentRepairJobs: RepairJob[] = [

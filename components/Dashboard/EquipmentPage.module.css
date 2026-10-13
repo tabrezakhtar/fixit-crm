@@ -1,0 +1,61 @@
+.equipmentCard {
+  height: 100%;
+  overflow: hidden;
+  border-top: 3px solid var(--category-color);
+  transition: transform 150ms ease, box-shadow 150ms ease;
+}
+
+.equipmentCard:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--mantine-shadow-sm);
+}
+
+.equipmentCard[data-category='laptop'] {
+  --category-color: var(--mantine-color-blue-6);
+  --category-wash: var(--mantine-color-blue-0);
+}
+
+.equipmentCard[data-category='phone'] {
+  --category-color: var(--mantine-color-teal-6);
+  --category-wash: var(--mantine-color-teal-0);
+}
+
+.equipmentCard[data-category='other'] {
+  --category-color: var(--mantine-color-orange-6);
+  --category-wash: var(--mantine-color-orange-0);
+}
+
+.cardTop {
+  padding: 20px 20px 18px;
+  background: light-dark(var(--category-wash), var(--mantine-color-dark-7));
+}
+
+.modelName {
+  color: light-dark(var(--mantine-color-dark-9), var(--mantine-color-gray-0));
+}
+
+.deviceIcon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid color-mix(in srgb, var(--category-color) 25%, transparent);
+  border-radius: 10px;
+  background: light-dark(white, var(--mantine-color-dark-6));
+  color: var(--category-color);
+}
+
+.latestRepair {
+  padding: 14px 20px 18px;
+  border-top: 1px solid light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-5));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equipmentCard {
+    transition: none;
+  }
+
+  .equipmentCard:hover {
+    transform: none;
+  }
+}
