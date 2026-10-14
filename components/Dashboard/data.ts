@@ -24,7 +24,6 @@ export interface NavItem {
   label: string;
   icon: typeof IconDashboard;
   href?: string;
-  active?: boolean;
 }
 
 export const primaryNavItems: NavItem[] = [
