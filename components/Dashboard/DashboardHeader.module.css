@@ -2,6 +2,12 @@
   margin-top: 2px;
 }
 
+.logo {
+  display: block;
+  width: 104px;
+  height: auto;
+}
+
 .search {
   width: 280px;
 }

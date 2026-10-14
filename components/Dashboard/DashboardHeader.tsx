@@ -13,6 +13,7 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from '@mantine/core';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { IconBell, IconChevronRight, IconMoon, IconPlus, IconSearch, IconSun } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
@@ -45,9 +46,14 @@ export function DashboardHeader({ burger }: { burger?: ReactNode }) {
       <Group gap="md" wrap="nowrap">
         {burger}
         <div>
-          <Text fw={700} size="lg">
-            {pageLabel}
-          </Text>
+          <Image
+            src="/fixitcrm-logo.png"
+            alt="FixitCRM logo"
+            width={2078}
+            height={757}
+            className={classes.logo}
+            priority
+          />
           <Breadcrumbs separator={<IconChevronRight size={12} />} className={classes.breadcrumbs}>
             <Text size="xs" c="dimmed">
               Home

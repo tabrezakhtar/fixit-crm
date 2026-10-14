@@ -13,14 +13,6 @@ export function DashboardSidebar() {
   return (
     <Stack h="100%" justify="space-between" py="md" px="xs">
       <div>
-        <Group gap={8} px="sm" mb="lg">
-          <Box className={classes.logo}>
-            <IconTool size={18} stroke={1.8} />
-          </Box>
-          <Text fw={700} c="white" size="md">
-            FixIt CRM
-          </Text>
-        </Group>
         <Stack gap={2}>
           {primaryNavItems.map((item) => {
             const props = {
