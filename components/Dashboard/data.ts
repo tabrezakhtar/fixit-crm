@@ -32,7 +32,7 @@ export const primaryNavItems: NavItem[] = [
   { label: 'Repair Jobs', icon: IconTool, href: '/dashboard/repair-jobs' },
   { label: 'Customers', icon: IconUsers, href: '/dashboard/customers' },
   { label: 'Equipment', icon: IconDeviceLaptop, href: '/dashboard/equipment' },
-  { label: 'Appointments & Schedule', icon: IconCalendarEvent },
+  { label: 'Appointments & Schedule', icon: IconCalendarEvent, href: '/dashboard/appointments' },
   { label: 'Quotes & Estimates', icon: IconFileInvoice },
   { label: 'Parts & Inventory', icon: IconBox },
   { label: 'Invoices & Payments', icon: IconCreditCard },
@@ -118,6 +118,7 @@ export interface AttentionItem {
 
 export interface ScheduleItem {
   time: string;
+  daysFromToday?: number;
   customer: string;
   repairType: string;
   technician: string;
@@ -125,10 +126,10 @@ export interface ScheduleItem {
 }
 
 export const todaySchedule: ScheduleItem[] = [
-  { time: '09:00', customer: 'Sarah Mitchell', repairType: 'Laptop drop-off', technician: 'James Carter', status: 'Drop-off' },
-  { time: '10:30', customer: 'Priya Anand', repairType: 'Phone collection', technician: 'James Carter', status: 'Collection' },
-  { time: '11:15', customer: 'Noah Fischer', repairType: 'PC diagnostic review', technician: 'Liam Osei', status: 'Confirmed' },
-  { time: '13:00', customer: 'Grace Lin', repairType: 'Quote approval meeting', technician: 'Dana Fields', status: 'Confirmed' },
-  { time: '15:30', customer: 'Marcus Webb', repairType: 'Amplifier drop-off', technician: 'Dana Fields', status: 'Drop-off' },
+  { time: '09:00', daysFromToday: 0, customer: 'Sarah Mitchell', repairType: 'Laptop drop-off', technician: 'James Carter', status: 'Drop-off' },
+  { time: '10:30', daysFromToday: 1, customer: 'Priya Anand', repairType: 'Phone collection', technician: 'James Carter', status: 'Collection' },
+  { time: '11:15', daysFromToday: 2, customer: 'Noah Fischer', repairType: 'PC diagnostic review', technician: 'Liam Osei', status: 'Confirmed' },
+  { time: '13:00', daysFromToday: 3, customer: 'Grace Lin', repairType: 'Quote approval meeting', technician: 'Dana Fields', status: 'Confirmed' },
+  { time: '15:30', daysFromToday: 4, customer: 'Marcus Webb', repairType: 'Amplifier drop-off', technician: 'Dana Fields', status: 'Drop-off' },
 ];
 

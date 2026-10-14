@@ -13,8 +13,10 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from '@mantine/core';
+import { usePathname } from 'next/navigation';
 import { IconBell, IconChevronRight, IconMoon, IconPlus, IconSearch, IconSun } from '@tabler/icons-react';
 import type { ReactNode } from 'react';
+import { primaryNavItems } from './data';
 import classes from './DashboardHeader.module.css';
 
 function ThemeToggle() {
@@ -35,20 +37,23 @@ function ThemeToggle() {
 }
 
 export function DashboardHeader({ burger }: { burger?: ReactNode }) {
+  const pathname = usePathname();
+  const pageLabel = primaryNavItems.find((item) => item.href === pathname)?.label ?? 'Dashboard';
+
   return (
     <Group h="100%" px="md" justify="space-between" wrap="nowrap">
       <Group gap="md" wrap="nowrap">
         {burger}
         <div>
           <Text fw={700} size="lg">
-            Dashboard
+            {pageLabel}
           </Text>
           <Breadcrumbs separator={<IconChevronRight size={12} />} className={classes.breadcrumbs}>
             <Text size="xs" c="dimmed">
               Home
             </Text>
             <Text size="xs" c="dimmed">
-              Dashboard
+              {pageLabel}
             </Text>
           </Breadcrumbs>
         </div>

@@ -42,9 +42,36 @@ function parseReceivedDate(value: string): Date {
   return date;
 }
 
-function appointmentDate(time: string): Date {
+const seedDates = [
+  ...customers.flatMap((customer) => [customer.createdAt, customer.updatedAt]),
+  ...repairJobs.map((job) => parseReceivedDate(job.dateReceived)),
+];
+const seedReferenceDay = Math.max(
+  ...seedDates.map((date) => Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
+) + 86_400_000;
+
+function shiftSeedDateToToday(value: Date): Date {
+  const valueDay = Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate());
+  const daysFromReference = Math.round((valueDay - seedReferenceDay) / 86_400_000);
+  const today = new Date();
+
+  return new Date(
+    Date.UTC(
+      today.getUTCFullYear(),
+      today.getUTCMonth(),
+      today.getUTCDate() + daysFromReference,
+      value.getUTCHours(),
+      value.getUTCMinutes(),
+      value.getUTCSeconds(),
+      value.getUTCMilliseconds()
+    )
+  );
+}
+
+function appointmentDate(time: string, daysFromToday = 0): Date {
   const [hours, minutes] = time.split(':').map(Number);
   const date = new Date();
+  date.setUTCDate(date.getUTCDate() + daysFromToday);
   date.setUTCHours(hours, minutes, 0, 0);
   return date;
 }
@@ -63,7 +90,13 @@ async function seed() {
     await transaction.technician.deleteMany();
     await transaction.customer.deleteMany();
 
-    await transaction.customer.createMany({ data: customers });
+    await transaction.customer.createMany({
+      data: customers.map((customer) => ({
+        ...customer,
+        createdAt: shiftSeedDateToToday(customer.createdAt),
+        updatedAt: shiftSeedDateToToday(customer.updatedAt),
+      })),
+    });
 
     await transaction.technician.createMany({
       data: technicianNames.map((name) => {
@@ -87,7 +120,7 @@ async function seed() {
         issue: job.issue,
         status: job.status,
         technicianId: technicianIds.get(job.technician),
-        dateReceived: parseReceivedDate(job.dateReceived),
+        dateReceived: shiftSeedDateToToday(parseReceivedDate(job.dateReceived)),
       })),
     });
 
@@ -95,7 +128,7 @@ async function seed() {
       data: todaySchedule.map((appointment) => ({
         customerId: getCustomerId(appointment.customer),
         technicianId: technicianIds.get(appointment.technician),
-        scheduledAt: appointmentDate(appointment.time),
+        scheduledAt: appointmentDate(appointment.time, appointment.daysFromToday),
         repairType: appointment.repairType,
         status: appointmentStatuses[appointment.status],
       })),
