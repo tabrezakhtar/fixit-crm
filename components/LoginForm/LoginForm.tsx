@@ -47,7 +47,7 @@ export function LoginForm({ password }: { password: string }) {
           <input type="hidden" name="username" value="guest" />
           <input type="hidden" name="password" value={password} />
           <Button type="submit" fullWidth mt="xl" loading={isPending}>
-            Login as guest
+            Explore Demo
           </Button>
         </Paper>
         <Text size="xs" className={classes.footer}>
