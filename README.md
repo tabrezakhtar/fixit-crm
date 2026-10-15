@@ -1,37 +1,62 @@
-# Mantine Next.js template
+# Fixit CRM
 
-This is a template for [Next.js](https://nextjs.org/) app router + [Mantine](https://mantine.dev/).
-If you want to use pages router instead, see [next-pages-template](https://github.com/mantinedev/next-pages-template).
+Fixit CRM is a repair-shop dashboard for tracking customers, equipment repair jobs, technicians, and appointments. It uses Next.js, Mantine, Prisma, and PostgreSQL.
 
 ## Features
 
-This template comes with the following features:
+- Dashboard with repair-job status, recent work, and today's schedule
+- Customer, equipment, repair-job, and appointment views
+- Password-protected guest access using a signed session cookie
+- PostgreSQL data access through Prisma
 
-- [PostCSS](https://postcss.org/) with [mantine-postcss-preset](https://mantine.dev/styles/postcss-preset)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Storybook](https://storybook.js.org/)
-- [Jest](https://jestjs.io/) setup with [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)
-- Oxlint setup for TypeScript and React sources
+## Requirements
 
-## npm scripts
+- Node.js compatible with the versions required by Next.js 16
+- pnpm 9
+- PostgreSQL
 
-### Build and dev scripts
+## Getting started
 
-- `dev` – start dev server
-- `build` – bundle application for production
-- `analyze` – analyzes application bundle with [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+1. Install dependencies:
 
-### Testing scripts
+	```sh
+	pnpm install
+	```
 
-- `typecheck` – checks TypeScript types
-- `lint` – runs oxlint and stylelint
-- `format:test` – checks files with oxfmt
-- `jest` – runs jest tests
-- `jest:watch` – starts jest watch
-- `test` – runs `jest`, `format:test`, `lint` and `typecheck` scripts
+2. Create a `.env` file in the project root:
 
-### Other scripts
+	```dotenv
+	DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/fixit_crm?schema=public"
+	GUEST_PASSWORD="choose-a-local-password"
+	SESSION_SECRET="replace-with-a-long-random-secret"
+	```
 
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `format:write` – formats all files with oxfmt
+	`DATABASE_URL` must point to a PostgreSQL database. `GUEST_PASSWORD` protects the app's sign-in form. `SESSION_SECRET` signs dashboard sessions; keep it private and use a strong value.
+
+3. Create and apply the database migration, then load sample data:
+
+	```sh
+	pnpm db:migrate
+	pnpm db:seed
+	```
+
+	**Warning:** seeding deletes existing appointments, repair jobs, technicians, and customers before inserting sample data.
+
+4. Start the development server:
+
+	```sh
+	pnpm dev
+	```
+
+	Open [http://localhost:3000](http://localhost:3000) and sign in with the `GUEST_PASSWORD` value.
+
+## Scripts
+
+| Command | Description |
+| --- | --- |
+| `pnpm dev` | Start the development server |
+| `pnpm build` | Generate the Prisma client and build the app |
+| `pnpm start` | Start the production server |
+| `pnpm db:migrate` | Create and apply development database migrations |
+| `pnpm db:seed` | Replace database contents with sample CRM data |
+| `pnpm test` | Run type generation, formatting, lint, type checks, and Jest |
