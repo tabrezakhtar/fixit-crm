@@ -1,11 +1,11 @@
 import { Button, Group, Select, Stack, Text, Title } from '@mantine/core';
 import { IconCalendarPlus, IconPlus, IconUserPlus } from '@tabler/icons-react';
 
-export function DashboardWelcome() {
+export function DashboardWelcome({ username }: { username: string }) {
   return (
     <Group justify="space-between" align="flex-start" wrap="wrap" mb="lg">
       <Stack gap={2}>
-        <Title order={2}>Good morning, Alex</Title>
+        <Title order={2}>Good morning, {username}</Title>
         <Text c="dimmed" size="sm">
           Here&apos;s what&apos;s happening at your workshop today.
         </Text>

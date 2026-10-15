@@ -18,13 +18,17 @@ export function createGuestSession() {
     .sign(getSessionSecret());
 }
 
-export async function verifyGuestSession(token: string | undefined) {
-  if (!token || !process.env.SESSION_SECRET) return false;
+export async function getGuestSessionUsername(token: string | undefined) {
+  if (!token || !process.env.SESSION_SECRET) return null;
 
   try {
     const { payload } = await jwtVerify(token, getSessionSecret(), { algorithms: ['HS256'] });
-    return payload.sub === 'guest';
+    return payload.sub === 'guest' ? payload.sub : null;
   } catch {
-    return false;
+    return null;
   }
+}
+
+export async function verifyGuestSession(token: string | undefined) {
+  return (await getGuestSessionUsername(token)) !== null;
 }

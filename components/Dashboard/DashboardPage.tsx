@@ -13,7 +13,7 @@ import type { getDashboardData } from '../../lib/dashboard';
 
 type DashboardData = Awaited<ReturnType<typeof getDashboardData>>;
 
-export function DashboardPage() {
+export function DashboardPage({ username }: { username: string }) {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,7 +38,7 @@ export function DashboardPage() {
 
   return (
     <Stack gap="lg">
-      <DashboardWelcome />
+      <DashboardWelcome username={username} />
 
       {error && <Alert color="red" title="Dashboard unavailable">{error}</Alert>}
 
