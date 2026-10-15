@@ -1,4 +1,5 @@
 import 'server-only';
+import { cacheLife } from 'next/cache';
 import { prisma } from './prisma';
 
 const customerSelect = {
@@ -20,7 +21,10 @@ const customerSelect = {
   updatedAt: true,
 } as const;
 
-export function getCustomers() {
+export async function getCustomers() {
+  'use cache';
+  cacheLife('minutes');
+
   return prisma.customer.findMany({
     select: customerSelect,
     orderBy: { createdAt: 'desc' },

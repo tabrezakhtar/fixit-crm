@@ -3,8 +3,6 @@ import { NextResponse } from 'next/server';
 import { getDashboardData } from '../../../lib/dashboard';
 import { GUEST_SESSION_COOKIE, verifyGuestSession } from '../../../lib/guest-session';
 
-export const dynamic = 'force-dynamic';
-
 export async function GET() {
   const token = (await cookies()).get(GUEST_SESSION_COOKIE)?.value;
   if (!(await verifyGuestSession(token))) {

@@ -1,4 +1,5 @@
 import 'server-only';
+import { cacheLife } from 'next/cache';
 import { RepairJobStatus } from '../generated/prisma/client';
 import type { EquipmentCategory, EquipmentModel, JobStatus } from '../components/Dashboard/data';
 import { prisma } from './prisma';
@@ -29,6 +30,9 @@ function formatDate(date: Date): string {
 }
 
 export async function getEquipmentModels(): Promise<EquipmentModel[]> {
+  'use cache';
+  cacheLife('minutes');
+
   const jobs = await prisma.repairJob.findMany({
     orderBy: [{ dateReceived: 'desc' }, { id: 'desc' }],
     select: {

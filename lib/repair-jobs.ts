@@ -1,4 +1,5 @@
 import 'server-only';
+import { cacheLife } from 'next/cache';
 import { RepairJobStatus } from '../generated/prisma/client';
 import type { JobStatus, RepairJobListItem } from '../components/Dashboard/data';
 import { prisma } from './prisma';
@@ -13,6 +14,9 @@ const jobStatusLabels: Record<RepairJobStatus, JobStatus> = {
 };
 
 export async function getRepairJobs(): Promise<RepairJobListItem[]> {
+  'use cache';
+  cacheLife('minutes');
+
   const jobs = await prisma.repairJob.findMany({
     orderBy: [{ dateReceived: 'desc' }, { id: 'desc' }],
     include: {

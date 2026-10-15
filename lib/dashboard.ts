@@ -1,4 +1,5 @@
 import 'server-only';
+import { cacheLife } from 'next/cache';
 import { AppointmentStatus, RepairJobStatus } from '../generated/prisma/client';
 import { prisma } from './prisma';
 import { dashboardStatusCards } from '../components/Dashboard/data';
@@ -55,6 +56,17 @@ export async function getDashboardData() {
   tomorrowStart.setUTCDate(tomorrowStart.getUTCDate() + 1);
   const chartStart = new Date(todayStart);
   chartStart.setUTCDate(chartStart.getUTCDate() - 6);
+
+  return getDashboardDataForPeriod(todayStart, tomorrowStart, chartStart);
+}
+
+async function getDashboardDataForPeriod(
+  todayStart: Date,
+  tomorrowStart: Date,
+  chartStart: Date
+) {
+  'use cache';
+  cacheLife('minutes');
 
   const [statusCounts, recentRows, attentionRows, scheduleRows, chartRows] = await Promise.all([
     prisma.repairJob.groupBy({ by: ['status'], _count: { _all: true } }),

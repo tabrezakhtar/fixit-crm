@@ -5,6 +5,7 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 export default withBundleAnalyzer({
+  cacheComponents: true,
   reactStrictMode: false,
   experimental: {
     optimizePackageImports: ['@mantine/core', '@mantine/hooks'],

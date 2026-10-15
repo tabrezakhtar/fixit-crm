@@ -1,4 +1,5 @@
 import 'server-only';
+import { cacheLife } from 'next/cache';
 import { AppointmentStatus } from '../generated/prisma/client';
 import { prisma } from './prisma';
 
@@ -17,6 +18,9 @@ function formatScheduleDate(date: Date): string {
 }
 
 export async function getAppointments() {
+  'use cache';
+  cacheLife('minutes');
+
   const appointments = await prisma.appointment.findMany({
     orderBy: [{ scheduledAt: 'asc' }, { id: 'asc' }],
     include: {
