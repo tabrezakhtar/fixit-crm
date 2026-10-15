@@ -1,0 +1,66 @@
+.page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 40px 20px;
+  background-color: light-dark(#f3f6fa, #151b25);
+  background-image: linear-gradient(light-dark(rgb(18 47 88 / 4%), rgb(255 255 255 / 4%)) 1px, transparent 1px),
+    linear-gradient(90deg, light-dark(rgb(18 47 88 / 4%), rgb(255 255 255 / 4%)) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+.container {
+  width: 100%;
+  text-align: center;
+}
+
+.logo {
+  display: block;
+  width: min(100%, 320px);
+  height: auto;
+  margin: 0 auto 4px;
+  object-fit: contain;
+}
+
+.title {
+  color: light-dark(#142c50, var(--mantine-color-gray-0));
+  font-size: 30px;
+  font-weight: 750;
+}
+
+.subtitle {
+  margin-top: 8px;
+  color: light-dark(#64748b, var(--mantine-color-gray-4));
+}
+
+.form {
+  text-align: left;
+  border-color: light-dark(#dce3ec, var(--mantine-color-dark-4));
+  background: light-dark(#fff, var(--mantine-color-dark-7));
+  color: light-dark(var(--mantine-color-gray-9), var(--mantine-color-gray-0));
+}
+
+.form :global(.mantine-Input-input) {
+  border-color: light-dark(var(--mantine-color-gray-4), var(--mantine-color-dark-3));
+  background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-6));
+  color: light-dark(var(--mantine-color-gray-9), var(--mantine-color-gray-0));
+}
+
+.form :global(.mantine-Input-input::placeholder) {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-gray-5));
+}
+
+.footer {
+  margin-top: 24px;
+  color: light-dark(#738197, var(--mantine-color-gray-5));
+}
+
+@media (max-width: 480px) {
+  .page {
+    padding: 24px 16px;
+  }
+
+  .logo {
+    width: min(100%, 280px);
+  }
+}

@@ -1,9 +1,10 @@
 'use client';
 
-import { Box, Group, NavLink, Stack, Text } from '@mantine/core';
+import { Box, Button, Group, NavLink, Popover, Stack, Text } from '@mantine/core';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { IconTool } from '@tabler/icons-react';
+import { IconLogout, IconTool } from '@tabler/icons-react';
+import { logout } from '../../app/actions/auth';
 import { primaryNavItems, secondaryNavItems } from './data';
 import classes from './DashboardSidebar.module.css';
 
@@ -33,12 +34,22 @@ export function DashboardSidebar() {
       </div>
       <Stack gap={2}>
         {secondaryNavItems.map((item) => (
-          <NavLink
-            key={item.label}
-            label={item.label}
-            leftSection={<item.icon size={18} stroke={1.8} />}
-            className={classes.navLink}
-          />
+          <Popover key={item.label} position="top" withArrow shadow="md">
+            <Popover.Target>
+              <NavLink
+                label={item.label}
+                leftSection={<item.icon size={18} stroke={1.8} />}
+                className={classes.navLink}
+              />
+            </Popover.Target>
+            <Popover.Dropdown>
+              <form action={logout}>
+                <Button type="submit" color="red" leftSection={<IconLogout size={16} />}>
+                  Log out
+                </Button>
+              </form>
+            </Popover.Dropdown>
+          </Popover>
         ))}
       </Stack>
     </Stack>
