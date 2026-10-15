@@ -9,7 +9,7 @@ export function DashboardWelcome({ username }: { username: string }) {
     const hour = new Date().getHours();
     setGreeting(
       hour < 5 || hour >= 21
-        ? 'Good night'
+        ? 'Welcome'
         : hour < 12
           ? 'Good morning'
           : hour < 17
