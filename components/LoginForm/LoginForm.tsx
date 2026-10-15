@@ -33,22 +33,21 @@ export function LoginForm({ password }: { password: string }) {
           )}
           <TextInput
             label="Username"
-            name="username"
             value="guest"
-            readOnly
+            disabled
             autoComplete="username"
-            required
           />
           <PasswordInput
             label="Password"
-            name="password"
-            defaultValue={password}
+            defaultValue="••••••••"
+            disabled
             autoComplete="current-password"
-            required
             mt="md"
           />
+          <input type="hidden" name="username" value="guest" />
+          <input type="hidden" name="password" value={password} />
           <Button type="submit" fullWidth mt="xl" loading={isPending}>
-            Sign in
+            Login as guest
           </Button>
         </Paper>
         <Text size="xs" className={classes.footer}>
