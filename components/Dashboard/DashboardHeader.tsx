@@ -47,7 +47,7 @@ export function DashboardHeader({ burger }: { burger?: ReactNode }) {
         {burger}
         <div>
           <Image
-            src="/fixitcrm-logo.png"
+            src="/fixitcrm-logo-header.png"
             alt="FixitCRM logo"
             width={2078}
             height={757}
