@@ -1,9 +1,18 @@
+import { Suspense } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { LoginForm } from '../components/LoginForm/LoginForm';
 import { GUEST_SESSION_COOKIE, verifyGuestSession } from '../lib/guest-session';
 
 export default async function HomePage() {
+  return (
+    <Suspense fallback={null}>
+      <HomePageContent />
+    </Suspense>
+  );
+}
+
+async function HomePageContent() {
   const token = (await cookies()).get(GUEST_SESSION_COOKIE)?.value;
   if (await verifyGuestSession(token)) {
     redirect('/dashboard');
