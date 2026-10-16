@@ -15,7 +15,7 @@ const jobStatusLabels: Record<RepairJobStatus, JobStatus> = {
 
 export async function getRepairJobs(): Promise<RepairJobListItem[]> {
   'use cache';
-  cacheLife('minutes');
+  cacheLife('hours');
 
   const jobs = await prisma.repairJob.findMany({
     orderBy: [{ dateReceived: 'desc' }, { id: 'desc' }],

@@ -31,7 +31,7 @@ function formatDate(date: Date): string {
 
 export async function getEquipmentModels(): Promise<EquipmentModel[]> {
   'use cache';
-  cacheLife('minutes');
+  cacheLife('hours');
 
   const jobs = await prisma.repairJob.findMany({
     orderBy: [{ dateReceived: 'desc' }, { id: 'desc' }],

@@ -23,7 +23,7 @@ const customerSelect = {
 
 export async function getCustomers() {
   'use cache';
-  cacheLife('minutes');
+  cacheLife('hours');
 
   return prisma.customer.findMany({
     select: customerSelect,

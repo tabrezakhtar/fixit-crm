@@ -19,7 +19,7 @@ function formatScheduleDate(date: Date): string {
 
 export async function getAppointments() {
   'use cache';
-  cacheLife('minutes');
+  cacheLife('hours');
 
   const appointments = await prisma.appointment.findMany({
     orderBy: [{ scheduledAt: 'asc' }, { id: 'asc' }],
