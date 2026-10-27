@@ -1,5 +1,5 @@
-import { RepairJobsPage } from '../../../components/Dashboard/RepairJobsPage';
 import { DashboardShell } from '../../../components/Dashboard/DashboardShell';
+import { RepairJobsPage } from '../../../components/Dashboard/RepairJobsPage';
 import { getRepairJobs } from '../../../lib/repair-jobs';
 
 export default async function RepairJobs() {

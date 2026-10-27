@@ -1,7 +1,7 @@
-import 'server-only';
 import { cacheLife } from 'next/cache';
-import { RepairJobStatus } from '../generated/prisma/client';
+import 'server-only';
 import type { EquipmentCategory, EquipmentModel, JobStatus } from '../components/Dashboard/data';
+import { RepairJobStatus } from '../generated/prisma/client';
 import { prisma } from './prisma';
 
 const jobStatusLabels: Record<RepairJobStatus, JobStatus> = {
@@ -15,8 +15,12 @@ const jobStatusLabels: Record<RepairJobStatus, JobStatus> = {
 
 function getCategory(equipment: string): EquipmentCategory {
   const name = equipment.toLowerCase();
-  if (/iphone|pixel|phone|galaxy/.test(name)) return 'Phone';
-  if (/laptop|macbook|thinkpad|xps|chromebook/.test(name)) return 'Laptop';
+  if (/iphone|pixel|phone|galaxy/.test(name)) {
+    return 'Phone';
+  }
+  if (/laptop|macbook|thinkpad|xps|chromebook/.test(name)) {
+    return 'Laptop';
+  }
   return 'Other';
 }
 

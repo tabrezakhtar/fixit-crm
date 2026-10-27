@@ -12,6 +12,7 @@ export async function GET() {
   try {
     return NextResponse.json(await getDashboardData());
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error('Dashboard data request failed:', error);
     return NextResponse.json({ error: 'Unable to load dashboard data.' }, { status: 500 });
   }

@@ -1,8 +1,7 @@
 'use client';
 
 import { Badge, Group, Stack, Text, Title } from '@mantine/core';
-import { Schedule } from '@mantine/schedule';
-import type { ScheduleEventData } from '@mantine/schedule';
+import { Schedule, type ScheduleEventData } from '@mantine/schedule';
 
 export function AppointmentsPage({ events }: { events: ScheduleEventData[] }) {
   return (

@@ -1,16 +1,16 @@
-import 'server-only';
 import { cacheLife } from 'next/cache';
+import 'server-only';
+import {
+  dashboardStatusCards,
+  type AttentionItem,
+  type ChartDay,
+  type JobStatus,
+  type RepairJob,
+  type ScheduleItem,
+  type SummaryCardData,
+} from '../components/Dashboard/data';
 import { AppointmentStatus, RepairJobStatus } from '../generated/prisma/client';
 import { prisma } from './prisma';
-import { dashboardStatusCards } from '../components/Dashboard/data';
-import type {
-  AttentionItem,
-  ChartDay,
-  JobStatus,
-  RepairJob,
-  ScheduleItem,
-  SummaryCardData,
-} from '../components/Dashboard/data';
 
 const jobStatusLabels: Record<RepairJobStatus, JobStatus> = {
   [RepairJobStatus.InProgress]: 'In Progress',
@@ -60,11 +60,7 @@ export async function getDashboardData() {
   return getDashboardDataForPeriod(todayStart, tomorrowStart, chartStart);
 }
 
-async function getDashboardDataForPeriod(
-  todayStart: Date,
-  tomorrowStart: Date,
-  chartStart: Date
-) {
+async function getDashboardDataForPeriod(todayStart: Date, tomorrowStart: Date, chartStart: Date) {
   'use cache';
   cacheLife('minutes');
 
@@ -99,14 +95,16 @@ async function getDashboardDataForPeriod(
   ]);
 
   const counts = new Map(statusCounts.map(({ status, _count }) => [status, _count._all]));
-  const summaryCards: SummaryCardData[] = dashboardStatusCards.map(({ label, status, color, icon }) => ({
-    label,
-    value: String(counts.get(jobStatusValues[status]) ?? 0),
-    delta: 'Current jobs',
-    trend: 'flat',
-    color,
-    icon,
-  }));
+  const summaryCards: SummaryCardData[] = dashboardStatusCards.map(
+    ({ label, status, color, icon }) => ({
+      label,
+      value: String(counts.get(jobStatusValues[status]) ?? 0),
+      delta: 'Current jobs',
+      trend: 'flat',
+      color,
+      icon,
+    })
+  );
 
   const chartBuckets = new Map<string, { created: number; ready: number }>();
   for (let offset = 0; offset < 7; offset += 1) {
@@ -116,9 +114,13 @@ async function getDashboardDataForPeriod(
   }
   for (const job of chartRows) {
     const bucket = chartBuckets.get(utcDateKey(job.dateReceived));
-    if (!bucket) continue;
+    if (!bucket) {
+      continue;
+    }
     bucket.created += 1;
-    if (job.status === RepairJobStatus.ReadyForCollection) bucket.ready += 1;
+    if (job.status === RepairJobStatus.ReadyForCollection) {
+      bucket.ready += 1;
+    }
   }
 
   const chart: ChartDay[] = Array.from(chartBuckets, ([day, values]) => ({
@@ -135,7 +137,9 @@ async function getDashboardDataForPeriod(
     equipment: job.equipment,
     issue: job.issue,
     status: jobStatusLabels[job.status],
-    technician: job.technician ? `${job.technician.firstName} ${job.technician.lastName}` : 'Unassigned',
+    technician: job.technician
+      ? `${job.technician.firstName} ${job.technician.lastName}`
+      : 'Unassigned',
     dateReceived: formatDate(job.dateReceived),
   }));
 

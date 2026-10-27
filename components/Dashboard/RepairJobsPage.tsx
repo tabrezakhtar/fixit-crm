@@ -1,8 +1,8 @@
 'use client';
 
-import { Card, Group, Select, SimpleGrid, Stack, Table, Text, TextInput } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
+import { IconSearch } from '@tabler/icons-react';
+import { Card, Group, Select, SimpleGrid, Stack, Table, Text, TextInput } from '@mantine/core';
 import { dashboardStatusCards, type JobStatus, type RepairJobListItem } from './data';
 import { StatusBadge } from './StatusBadge';
 import classes from './DataTable.module.css';
@@ -21,7 +21,9 @@ export function RepairJobsPage({ jobs }: { jobs: RepairJobListItem[] }) {
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const normalizedQuery = query.trim().toLowerCase();
   const filteredJobs = jobs.filter((job) => {
-    const matchesQuery = Object.values(job).some((value) => value.toLowerCase().includes(normalizedQuery));
+    const matchesQuery = Object.values(job).some((value) =>
+      value.toLowerCase().includes(normalizedQuery)
+    );
     return matchesQuery && (!statusFilter || job.status === statusFilter);
   });
 
@@ -29,10 +31,16 @@ export function RepairJobsPage({ jobs }: { jobs: RepairJobListItem[] }) {
     <Stack gap="lg">
       <Group justify="space-between" align="flex-end">
         <div>
-          <Text size="xl" fw={700}>Repair Jobs</Text>
-          <Text size="sm" c="dimmed">Track repairs, assignments, and job status</Text>
+          <Text size="xl" fw={700}>
+            Repair Jobs
+          </Text>
+          <Text size="sm" c="dimmed">
+            Track repairs, assignments, and job status
+          </Text>
         </div>
-        <Text size="sm" c="dimmed">{jobs.length} total jobs</Text>
+        <Text size="sm" c="dimmed">
+          {jobs.length} total jobs
+        </Text>
       </Group>
 
       <SimpleGrid cols={{ base: 2, sm: 3, lg: 6 }}>
@@ -40,8 +48,12 @@ export function RepairJobsPage({ jobs }: { jobs: RepairJobListItem[] }) {
           const count = jobs.filter((job) => job.status === status).length;
           return (
             <Card key={status} withBorder radius="sm" padding="md">
-              <Text size="xs" c="dimmed" lineClamp={1}>{label}</Text>
-              <Text size="xl" fw={700} c={`${color}.7`}>{count}</Text>
+              <Text size="xs" c="dimmed" lineClamp={1}>
+                {label}
+              </Text>
+              <Text size="xl" fw={700} c={`${color}.7`}>
+                {count}
+              </Text>
             </Card>
           );
         })}
@@ -51,7 +63,9 @@ export function RepairJobsPage({ jobs }: { jobs: RepairJobListItem[] }) {
         <Group justify="space-between" mb="md">
           <div>
             <Text fw={600}>All repair jobs</Text>
-            <Text size="xs" c="dimmed">Showing {filteredJobs.length} of {jobs.length}</Text>
+            <Text size="xs" c="dimmed">
+              Showing {filteredJobs.length} of {jobs.length}
+            </Text>
           </div>
           <Group w={{ base: '100%', sm: 'auto' }} grow>
             <TextInput
@@ -77,7 +91,12 @@ export function RepairJobsPage({ jobs }: { jobs: RepairJobListItem[] }) {
         </Group>
 
         <div className={classes.scrollContainer}>
-          <Table className={classes.repairTable} horizontalSpacing="md" verticalSpacing="sm" highlightOnHover>
+          <Table
+            className={classes.repairTable}
+            horizontalSpacing="md"
+            verticalSpacing="sm"
+            highlightOnHover
+          >
             <thead>
               <tr>
                 <th className={classes.headerCell}>Reference</th>
@@ -95,12 +114,22 @@ export function RepairJobsPage({ jobs }: { jobs: RepairJobListItem[] }) {
                   <tr key={job.reference}>
                     <td className={classes.cell}>{job.reference}</td>
                     <td className={classes.cell}>
-                      <Text size="sm" fw={600}>{job.customer}</Text>
-                      <Text size="xs" c="dimmed">{job.customerEmail}</Text>
+                      <Text size="sm" fw={600}>
+                        {job.customer}
+                      </Text>
+                      <Text size="xs" c="dimmed">
+                        {job.customerEmail}
+                      </Text>
                     </td>
                     <td className={classes.cell}>{job.equipment}</td>
-                    <td className={classes.cell}><Text size="sm" lineClamp={2}>{job.issue}</Text></td>
-                    <td className={classes.cell}><StatusBadge status={job.status} /></td>
+                    <td className={classes.cell}>
+                      <Text size="sm" lineClamp={2}>
+                        {job.issue}
+                      </Text>
+                    </td>
+                    <td className={classes.cell}>
+                      <StatusBadge status={job.status} />
+                    </td>
                     <td className={classes.cell}>{job.technician}</td>
                     <td className={classes.cell}>{job.dateReceived}</td>
                   </tr>
@@ -109,7 +138,9 @@ export function RepairJobsPage({ jobs }: { jobs: RepairJobListItem[] }) {
                 <tr>
                   <td colSpan={7}>
                     <Text ta="center" c="dimmed" py="lg">
-                      {jobs.length === 0 ? 'No repair jobs found.' : 'No repair jobs match your filters.'}
+                      {jobs.length === 0
+                        ? 'No repair jobs found.'
+                        : 'No repair jobs match your filters.'}
                     </Text>
                   </td>
                 </tr>

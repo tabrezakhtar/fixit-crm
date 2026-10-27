@@ -1,15 +1,15 @@
 'use client';
 
-import { Alert, Grid, GridCol, SimpleGrid, Stack } from '@mantine/core';
 import { useEffect, useState } from 'react';
+import { Alert, Grid, GridCol, SimpleGrid, Stack } from '@mantine/core';
+import type { getDashboardData } from '../../lib/dashboard';
 import { AttentionRequired } from './AttentionRequired';
 import { DashboardWelcome } from './DashboardWelcome';
+import { dashboardStatusCards } from './data';
 import { RecentRepairJobsTable } from './RecentRepairJobsTable';
 import { RepairJobsChart } from './RepairJobsChart';
 import { StatCard } from './StatCard';
 import { TodaySchedule } from './TodaySchedule';
-import { dashboardStatusCards } from './data';
-import type { getDashboardData } from '../../lib/dashboard';
 
 type DashboardData = Awaited<ReturnType<typeof getDashboardData>>;
 
@@ -23,10 +23,14 @@ export function DashboardPage({ username }: { username: string }) {
     async function loadDashboard() {
       try {
         const response = await fetch('/api/dashboard', { signal: controller.signal });
-        if (!response.ok) throw new Error('Unable to load dashboard data.');
+        if (!response.ok) {
+          throw new Error('Unable to load dashboard data.');
+        }
         setDashboardData((await response.json()) as DashboardData);
       } catch {
-        if (!controller.signal.aborted) setError('Unable to load dashboard data. Refresh to try again.');
+        if (!controller.signal.aborted) {
+          setError('Unable to load dashboard data. Refresh to try again.');
+        }
       }
     }
 
@@ -40,16 +44,31 @@ export function DashboardPage({ username }: { username: string }) {
     <Stack gap="lg">
       <DashboardWelcome username={username} />
 
-      {error && <Alert color="red" title="Dashboard unavailable">{error}</Alert>}
+      {error && (
+        <Alert color="red" title="Dashboard unavailable">
+          {error}
+        </Alert>
+      )}
 
       <SimpleGrid cols={{ base: 1, xs: 2, md: 3, lg: 6 }}>
-        {dashboardData ? (
-          dashboardData.summaryCards.map((card) => <StatCard key={card.label} {...card} loading={false} />)
-        ) : loading ? (
-          dashboardStatusCards.map(({ label, color, icon }) => (
-            <StatCard key={label} label={label} color={color} icon={icon} value="" delta="" trend="flat" loading />
-          ))
-        ) : null}
+        {dashboardData
+          ? dashboardData.summaryCards.map((card) => (
+              <StatCard key={card.label} {...card} loading={false} />
+            ))
+          : loading
+            ? dashboardStatusCards.map(({ label, color, icon }) => (
+                <StatCard
+                  key={label}
+                  label={label}
+                  color={color}
+                  icon={icon}
+                  value=""
+                  delta=""
+                  trend="flat"
+                  loading
+                />
+              ))
+            : null}
       </SimpleGrid>
 
       <Grid>

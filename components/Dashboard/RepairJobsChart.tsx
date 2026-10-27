@@ -41,27 +41,29 @@ export function RepairJobsChart({ data, loading }: { data: ChartDay[]; loading: 
       </Group>
 
       {loading ? (
-        <Center h={180}><Loader size="sm" aria-label="Loading repair job chart" /></Center>
+        <Center h={180}>
+          <Loader size="sm" aria-label="Loading repair job chart" />
+        </Center>
       ) : (
         <Group align="flex-end" gap="md" className={classes.chart}>
           {data.map((d) => (
-          <div key={d.day} className={classes.column}>
-            <Group align="flex-end" gap={4} className={classes.bars}>
-              <div
-                className={classes.barCreated}
-                style={{ height: `${(d.created / maxValue) * 100}%` }}
-                title={`Created: ${d.created}`}
-              />
-              <div
-                className={classes.barCompleted}
-                style={{ height: `${(d.readyForCollection / maxValue) * 100}%` }}
-                title={`Ready for collection: ${d.readyForCollection}`}
-              />
-            </Group>
-            <Text size="xs" c="dimmed" mt={6}>
-              {d.day}
-            </Text>
-          </div>
+            <div key={d.day} className={classes.column}>
+              <Group align="flex-end" gap={4} className={classes.bars}>
+                <div
+                  className={classes.barCreated}
+                  style={{ height: `${(d.created / maxValue) * 100}%` }}
+                  title={`Created: ${d.created}`}
+                />
+                <div
+                  className={classes.barCompleted}
+                  style={{ height: `${(d.readyForCollection / maxValue) * 100}%` }}
+                  title={`Ready for collection: ${d.readyForCollection}`}
+                />
+              </Group>
+              <Text size="xs" c="dimmed" mt={6}>
+                {d.day}
+              </Text>
+            </div>
           ))}
         </Group>
       )}

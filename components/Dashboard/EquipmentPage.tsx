@@ -1,8 +1,22 @@
 'use client';
 
-import { Badge, Card, Group, SegmentedControl, SimpleGrid, Stack, Text, TextInput } from '@mantine/core';
-import { IconDeviceDesktop, IconDeviceLaptop, IconDeviceMobile, IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
+import {
+  IconDeviceDesktop,
+  IconDeviceLaptop,
+  IconDeviceMobile,
+  IconSearch,
+} from '@tabler/icons-react';
+import {
+  Badge,
+  Card,
+  Group,
+  SegmentedControl,
+  SimpleGrid,
+  Stack,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import type { EquipmentCategory, EquipmentModel } from './data';
 import { StatusBadge } from './StatusBadge';
 import classes from './EquipmentPage.module.css';
@@ -31,8 +45,9 @@ export function EquipmentPage({ models }: { models: EquipmentModel[] }) {
   const [categoryFilter, setCategoryFilter] = useState('All');
   const normalizedQuery = query.trim().toLowerCase();
   const filteredModels = models.filter((model) => {
-    const matchesQuery = [model.name, model.latestRepair.customer, model.latestRepair.issue]
-      .some((value) => value.toLowerCase().includes(normalizedQuery));
+    const matchesQuery = [model.name, model.latestRepair.customer, model.latestRepair.issue].some(
+      (value) => value.toLowerCase().includes(normalizedQuery)
+    );
     return matchesQuery && (categoryFilter === 'All' || model.category === categoryFilter);
   });
   const repairRecordCount = models.reduce((total, model) => total + model.repairCount, 0);
@@ -41,12 +56,20 @@ export function EquipmentPage({ models }: { models: EquipmentModel[] }) {
     <Stack gap="lg">
       <Group justify="space-between" align="flex-end">
         <div>
-          <Text size="xl" fw={700}>Equipment</Text>
-          <Text size="sm" c="dimmed">Models recorded across repair jobs</Text>
+          <Text size="xl" fw={700}>
+            Equipment
+          </Text>
+          <Text size="sm" c="dimmed">
+            Models recorded across repair jobs
+          </Text>
         </div>
         <Group gap="xs">
-          <Badge variant="light" color="dark">{models.length} models</Badge>
-          <Badge variant="light" color="gray">{repairRecordCount} repair records</Badge>
+          <Badge variant="light" color="dark">
+            {models.length} models
+          </Badge>
+          <Badge variant="light" color="gray">
+            {repairRecordCount} repair records
+          </Badge>
         </Group>
       </Group>
 
@@ -95,22 +118,33 @@ export function EquipmentPage({ models }: { models: EquipmentModel[] }) {
                     {model.name}
                   </Text>
                   <Text size="sm" c="dimmed">
-                    {model.repairCount} {model.repairCount === 1 ? 'repair record' : 'repair records'}
+                    {model.repairCount}{' '}
+                    {model.repairCount === 1 ? 'repair record' : 'repair records'}
                   </Text>
                 </div>
 
                 <Stack className={classes.latestRepair} gap="sm">
                   <Group justify="space-between" align="center">
-                    <Text size="xs" fw={700} c="dimmed" tt="uppercase">Latest repair</Text>
+                    <Text size="xs" fw={700} c="dimmed" tt="uppercase">
+                      Latest repair
+                    </Text>
                     <StatusBadge status={model.latestRepair.status} />
                   </Group>
                   <div>
                     <Group justify="space-between" gap="xs">
-                      <Text size="sm" fw={600}>{model.latestRepair.reference}</Text>
-                      <Text size="xs" c="dimmed">{model.latestRepair.dateReceived}</Text>
+                      <Text size="sm" fw={600}>
+                        {model.latestRepair.reference}
+                      </Text>
+                      <Text size="xs" c="dimmed">
+                        {model.latestRepair.dateReceived}
+                      </Text>
                     </Group>
-                    <Text size="sm" mt={4}>{model.latestRepair.issue}</Text>
-                    <Text size="xs" c="dimmed" mt={3}>{model.latestRepair.customer}</Text>
+                    <Text size="sm" mt={4}>
+                      {model.latestRepair.issue}
+                    </Text>
+                    <Text size="xs" c="dimmed" mt={3}>
+                      {model.latestRepair.customer}
+                    </Text>
                   </div>
                 </Stack>
               </Card>
@@ -120,7 +154,9 @@ export function EquipmentPage({ models }: { models: EquipmentModel[] }) {
       ) : (
         <Card withBorder radius="sm" padding="xl">
           <Text ta="center" c="dimmed">
-            {models.length === 0 ? 'No equipment found in repair records.' : 'No equipment matches your filters.'}
+            {models.length === 0
+              ? 'No equipment found in repair records.'
+              : 'No equipment matches your filters.'}
           </Text>
         </Card>
       )}

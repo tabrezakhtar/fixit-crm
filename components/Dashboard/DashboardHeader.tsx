@@ -1,5 +1,16 @@
 'use client';
 
+import type { ReactNode } from 'react';
+import Image from 'next/image';
+import { usePathname } from 'next/navigation';
+import {
+  IconBell,
+  IconChevronRight,
+  IconMoon,
+  IconPlus,
+  IconSearch,
+  IconSun,
+} from '@tabler/icons-react';
 import {
   Box,
   ActionIcon,
@@ -13,10 +24,6 @@ import {
   useComputedColorScheme,
   useMantineColorScheme,
 } from '@mantine/core';
-import Image from 'next/image';
-import { usePathname } from 'next/navigation';
-import { IconBell, IconChevronRight, IconMoon, IconPlus, IconSearch, IconSun } from '@tabler/icons-react';
-import type { ReactNode } from 'react';
 import { primaryNavItems } from './data';
 import classes from './DashboardHeader.module.css';
 
@@ -31,8 +38,12 @@ function ThemeToggle() {
       size="lg"
       aria-label="Toggle color scheme"
     >
-      <Box darkHidden><IconMoon size={20} stroke={1.6} /></Box>
-      <Box lightHidden><IconSun size={20} stroke={1.6} /></Box>
+      <Box darkHidden>
+        <IconMoon size={20} stroke={1.6} />
+      </Box>
+      <Box lightHidden>
+        <IconSun size={20} stroke={1.6} />
+      </Box>
     </ActionIcon>
   );
 }

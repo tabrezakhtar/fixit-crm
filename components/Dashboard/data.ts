@@ -57,7 +57,12 @@ export const dashboardStatusCards: Array<{
   icon: string;
 }> = [
   { label: 'Jobs In Progress', status: 'In Progress', color: 'blue', icon: 'tool' },
-  { label: 'Awaiting Diagnosis', status: 'Awaiting Diagnosis', color: 'indigo', icon: 'stethoscope' },
+  {
+    label: 'Awaiting Diagnosis',
+    status: 'Awaiting Diagnosis',
+    color: 'indigo',
+    icon: 'stethoscope',
+  },
   { label: 'Awaiting Parts', status: 'Awaiting Parts', color: 'yellow', icon: 'box' },
   { label: 'Awaiting Approval', status: 'Awaiting Approval', color: 'grape', icon: 'approval' },
   { label: 'Ready for Collection', status: 'Ready for Collection', color: 'green', icon: 'check' },
@@ -125,10 +130,44 @@ export interface ScheduleItem {
 }
 
 export const todaySchedule: ScheduleItem[] = [
-  { time: '09:00', daysFromToday: 0, customer: 'Sarah Mitchell', repairType: 'Laptop drop-off', technician: 'James Carter', status: 'Drop-off' },
-  { time: '10:30', daysFromToday: 1, customer: 'Priya Anand', repairType: 'Phone collection', technician: 'James Carter', status: 'Collection' },
-  { time: '11:15', daysFromToday: 2, customer: 'Noah Fischer', repairType: 'PC diagnostic review', technician: 'Liam Osei', status: 'Confirmed' },
-  { time: '13:00', daysFromToday: 3, customer: 'Grace Lin', repairType: 'Quote approval meeting', technician: 'Dana Fields', status: 'Confirmed' },
-  { time: '15:30', daysFromToday: 4, customer: 'Marcus Webb', repairType: 'Amplifier drop-off', technician: 'Dana Fields', status: 'Drop-off' },
+  {
+    time: '09:00',
+    daysFromToday: 0,
+    customer: 'Sarah Mitchell',
+    repairType: 'Laptop drop-off',
+    technician: 'James Carter',
+    status: 'Drop-off',
+  },
+  {
+    time: '10:30',
+    daysFromToday: 1,
+    customer: 'Priya Anand',
+    repairType: 'Phone collection',
+    technician: 'James Carter',
+    status: 'Collection',
+  },
+  {
+    time: '11:15',
+    daysFromToday: 2,
+    customer: 'Noah Fischer',
+    repairType: 'PC diagnostic review',
+    technician: 'Liam Osei',
+    status: 'Confirmed',
+  },
+  {
+    time: '13:00',
+    daysFromToday: 3,
+    customer: 'Grace Lin',
+    repairType: 'Quote approval meeting',
+    technician: 'Dana Fields',
+    status: 'Confirmed',
+  },
+  {
+    time: '15:30',
+    daysFromToday: 4,
+    customer: 'Marcus Webb',
+    repairType: 'Amplifier drop-off',
+    technician: 'Dana Fields',
+    status: 'Drop-off',
+  },
 ];
-

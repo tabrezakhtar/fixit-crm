@@ -1,9 +1,9 @@
 'use client';
 
-import { Box, Button, Group, NavLink, Popover, Stack, Text } from '@mantine/core';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { IconLogout, IconTool } from '@tabler/icons-react';
+import { IconLogout } from '@tabler/icons-react';
+import { Button, NavLink, Popover, Stack } from '@mantine/core';
 import { logout } from '../../app/actions/auth';
 import { primaryNavItems, secondaryNavItems } from './data';
 import classes from './DashboardSidebar.module.css';

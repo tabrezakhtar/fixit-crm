@@ -15,8 +15,12 @@ const mockCookieDelete = jest.fn();
 
 function createFormData(username: FormDataEntryValue | null, password: FormDataEntryValue | null) {
   const formData = new FormData();
-  if (username !== null) formData.set('username', username);
-  if (password !== null) formData.set('password', password);
+  if (username !== null) {
+    formData.set('username', username);
+  }
+  if (password !== null) {
+    formData.set('password', password);
+  }
   return formData;
 }
 

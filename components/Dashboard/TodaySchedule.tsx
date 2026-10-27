@@ -17,29 +17,37 @@ export function TodaySchedule({ items, loading }: { items: ScheduleItem[]; loadi
         Today&apos;s Schedule
       </Text>
       {loading ? (
-        <Center h={180}><Loader size="sm" aria-label="Loading today's schedule" /></Center>
-      ) : <Stack gap={0} className={classes.timeline}>
-        {items.length === 0 ? (
-          <Text size="sm" c="dimmed">No appointments scheduled today.</Text>
-        ) : items.map((item) => (
-          <Group key={item.time} wrap="nowrap" align="flex-start" className={classes.row}>
-            <Text size="sm" fw={600} w={54}>
-              {item.time}
+        <Center h={180}>
+          <Loader size="sm" aria-label="Loading today's schedule" />
+        </Center>
+      ) : (
+        <Stack gap={0} className={classes.timeline}>
+          {items.length === 0 ? (
+            <Text size="sm" c="dimmed">
+              No appointments scheduled today.
             </Text>
-            <div style={{ flex: 1 }}>
-              <Text size="sm" fw={500}>
-                {item.customer}
-              </Text>
-              <Text size="xs" c="dimmed">
-                {item.repairType} · {item.technician}
-              </Text>
-            </div>
-            <Badge color={STATUS_COLORS[item.status]} variant="light" size="sm" radius="sm">
-              {item.status}
-            </Badge>
-          </Group>
-        ))}
-      </Stack>}
+          ) : (
+            items.map((item) => (
+              <Group key={item.time} wrap="nowrap" align="flex-start" className={classes.row}>
+                <Text size="sm" fw={600} w={54}>
+                  {item.time}
+                </Text>
+                <div style={{ flex: 1 }}>
+                  <Text size="sm" fw={500}>
+                    {item.customer}
+                  </Text>
+                  <Text size="xs" c="dimmed">
+                    {item.repairType} · {item.technician}
+                  </Text>
+                </div>
+                <Badge color={STATUS_COLORS[item.status]} variant="light" size="sm" radius="sm">
+                  {item.status}
+                </Badge>
+              </Group>
+            ))
+          )}
+        </Stack>
+      )}
     </Card>
   );
 }

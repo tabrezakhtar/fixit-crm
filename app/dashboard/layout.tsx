@@ -1,7 +1,7 @@
-import { Center, Loader } from '@mantine/core';
+import { Suspense, type ReactNode } from 'react';
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { Suspense, type ReactNode } from 'react';
+import { Center, Loader } from '@mantine/core';
 import { GUEST_SESSION_COOKIE, verifyGuestSession } from '../../lib/guest-session';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {

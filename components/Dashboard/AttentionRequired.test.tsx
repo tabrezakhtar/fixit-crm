@@ -1,6 +1,6 @@
 import { render, screen } from '../../test-utils';
-import type { AttentionItem } from './data';
 import { AttentionRequired } from './AttentionRequired';
+import type { AttentionItem } from './data';
 
 const item: AttentionItem = {
   reference: 'JOB-1042',

@@ -2,7 +2,16 @@
 
 import { useActionState } from 'react';
 import Image from 'next/image';
-import { Alert, Button, Container, Paper, PasswordInput, Text, TextInput, Title } from '@mantine/core';
+import {
+  Alert,
+  Button,
+  Container,
+  Paper,
+  PasswordInput,
+  Text,
+  TextInput,
+  Title,
+} from '@mantine/core';
 import { login } from '../../app/actions/auth';
 import classes from './LoginForm.module.css';
 
@@ -23,20 +32,26 @@ export function LoginForm({ password }: { password: string }) {
         <Title order={1} className={classes.title}>
           Welcome to FixitCRM
         </Title>
-        <Text className={classes.subtitle}>Manage repair jobs, customers, and appointments in one place.</Text>
+        <Text className={classes.subtitle}>
+          Manage repair jobs, customers, and appointments in one place.
+        </Text>
 
-        <Paper component="form" action={formAction} withBorder shadow="sm" p="xl" mt="xl" radius="md" className={classes.form}>
+        <Paper
+          component="form"
+          action={formAction}
+          withBorder
+          shadow="sm"
+          p="xl"
+          mt="xl"
+          radius="md"
+          className={classes.form}
+        >
           {state?.error && (
             <Alert color="red" mb="md" role="alert">
               {state.error}
             </Alert>
           )}
-          <TextInput
-            label="Username"
-            value="guest"
-            disabled
-            autoComplete="username"
-          />
+          <TextInput label="Username" value="guest" disabled autoComplete="username" />
           <PasswordInput
             label="Password"
             defaultValue="••••••••"

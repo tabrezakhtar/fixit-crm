@@ -1,5 +1,5 @@
-import { render, screen, waitFor } from '../../test-utils';
 import type { getDashboardData } from '../../lib/dashboard';
+import { render, screen, waitFor } from '../../test-utils';
 import { DashboardPage } from './DashboardPage';
 
 type DashboardData = Awaited<ReturnType<typeof getDashboardData>>;
@@ -50,7 +50,10 @@ describe('DashboardPage', () => {
     render(<DashboardPage username="Alex" />);
 
     expect(await screen.findByText('12')).toBeInTheDocument();
-    expect(fetchMock).toHaveBeenCalledWith('/api/dashboard', expect.objectContaining({ signal: expect.any(AbortSignal) }));
+    expect(fetchMock).toHaveBeenCalledWith(
+      '/api/dashboard',
+      expect.objectContaining({ signal: expect.any(AbortSignal) })
+    );
   });
 
   it('shows an error message when the request fails', async () => {
@@ -59,7 +62,11 @@ describe('DashboardPage', () => {
     render(<DashboardPage username="Alex" />);
 
     expect(await screen.findByText('Dashboard unavailable')).toBeInTheDocument();
-    expect(screen.getByText('Unable to load dashboard data. Refresh to try again.')).toBeInTheDocument();
-    await waitFor(() => expect(screen.queryByLabelText('Loading repair job chart')).not.toBeInTheDocument());
+    expect(
+      screen.getByText('Unable to load dashboard data. Refresh to try again.')
+    ).toBeInTheDocument();
+    await waitFor(() =>
+      expect(screen.queryByLabelText('Loading repair job chart')).not.toBeInTheDocument()
+    );
   });
 });

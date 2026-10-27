@@ -1,6 +1,6 @@
 import { AppointmentStatus } from '../generated/prisma/client';
-import { prisma } from './prisma';
 import { getAppointments } from './appointments';
+import { prisma } from './prisma';
 
 jest.mock('server-only', () => ({}));
 jest.mock('next/cache', () => ({ cacheLife: jest.fn() }));
@@ -15,7 +15,7 @@ describe('getAppointments', () => {
     const scheduledAt = new Date('2026-10-21T23:30:00.000Z');
     jest.mocked(prisma.appointment.findMany).mockResolvedValue([
       {
-        id: 42n,
+        id: BigInt(42),
         scheduledAt,
         repairType: 'Screen repair',
         status: AppointmentStatus.Confirmed,
@@ -34,7 +34,7 @@ describe('getAppointments', () => {
       },
     ]);
     expect(prisma.appointment.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({ orderBy: [{ scheduledAt: 'asc' }, { id: 'asc' }] }),
+      expect.objectContaining({ orderBy: [{ scheduledAt: 'asc' }, { id: 'asc' }] })
     );
   });
 });

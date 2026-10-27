@@ -1,5 +1,5 @@
-import 'server-only';
 import { cacheLife } from 'next/cache';
+import 'server-only';
 import { AppointmentStatus } from '../generated/prisma/client';
 import { prisma } from './prisma';
 

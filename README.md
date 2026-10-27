@@ -60,4 +60,3 @@ Fixit CRM is a repair-shop dashboard for tracking customers, equipment repair jo
 | `pnpm db:migrate` | Create and apply development database migrations |
 | `pnpm db:seed` | Replace database contents with sample CRM data |
 | `pnpm test` | Run type generation, formatting, lint, type checks, and Jest |
- 

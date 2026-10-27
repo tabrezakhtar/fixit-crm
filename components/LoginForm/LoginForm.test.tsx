@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '../../test-utils';
 import { login } from '../../app/actions/auth';
+import { render, screen } from '../../test-utils';
 import { LoginForm } from './LoginForm';
 
 jest.mock('../../app/actions/auth', () => ({ login: jest.fn() }));

@@ -1,7 +1,6 @@
 import userEvent from '@testing-library/user-event';
 import { render, screen } from '../../test-utils';
-import type { CustomerGridRow } from './CustomersPage';
-import { CustomersPage } from './CustomersPage';
+import { CustomersPage, type CustomerGridRow } from './CustomersPage';
 
 const customers: CustomerGridRow[] = [
   {

@@ -2,7 +2,9 @@
   height: 100%;
   overflow: hidden;
   border-top: 3px solid var(--category-color);
-  transition: transform 150ms ease, box-shadow 150ms ease;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
 }
 
 .equipmentCard:hover {

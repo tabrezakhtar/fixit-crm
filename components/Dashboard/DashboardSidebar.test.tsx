@@ -12,11 +12,11 @@ describe('DashboardSidebar', () => {
 
     expect(screen.getByRole('link', { name: 'Customers' })).toHaveAttribute(
       'href',
-      '/dashboard/customers',
+      '/dashboard/customers'
     );
     expect(screen.getByRole('link', { name: 'Repair Jobs' })).toHaveAttribute(
       'href',
-      '/dashboard/repair-jobs',
+      '/dashboard/repair-jobs'
     );
   });
 });

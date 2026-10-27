@@ -1,7 +1,18 @@
 'use client';
 
-import { ActionIcon, Anchor, Card, Center, Group, Loader, Select, Table, Text, TextInput } from '@mantine/core';
 import { IconDotsVertical, IconSearch } from '@tabler/icons-react';
+import {
+  ActionIcon,
+  Anchor,
+  Card,
+  Center,
+  Group,
+  Loader,
+  Select,
+  Table,
+  Text,
+  TextInput,
+} from '@mantine/core';
 import type { RepairJob } from './data';
 import { StatusBadge } from './StatusBadge';
 import classes from './DataTable.module.css';
@@ -25,7 +36,13 @@ export function RecentRepairJobsTable({ jobs, loading }: { jobs: RepairJob[]; lo
           style={{ flex: 1 }}
         />
         <Select
-          data={['All statuses', 'In Progress', 'Awaiting Parts', 'Awaiting Approval', 'Ready for Collection']}
+          data={[
+            'All statuses',
+            'In Progress',
+            'Awaiting Parts',
+            'Awaiting Approval',
+            'Ready for Collection',
+          ]}
           defaultValue="All statuses"
           size="xs"
           radius="md"
@@ -35,57 +52,63 @@ export function RecentRepairJobsTable({ jobs, loading }: { jobs: RepairJob[]; lo
 
       <div className={classes.scrollContainer}>
         {loading ? (
-          <Center h={220}><Loader size="sm" aria-label="Loading repair jobs" /></Center>
+          <Center h={220}>
+            <Loader size="sm" aria-label="Loading repair jobs" />
+          </Center>
         ) : (
-        <Table
-          className={classes.repairTable}
-          horizontalSpacing="lg"
-          verticalSpacing="md"
-          highlightOnHover
-        >
-          <thead>
-            <tr>
-              <th className={classes.headerCell}>Job Reference</th>
-              <th className={classes.headerCell}>Customer</th>
-              <th className={classes.headerCell}>Equipment</th>
-              <th className={classes.headerCell}>Issue</th>
-              <th className={classes.headerCell}>Status</th>
-              <th className={classes.headerCell}>Technician</th>
-              <th className={classes.headerCell}>Date Received</th>
-              <th className={classes.headerCell} />
-            </tr>
-          </thead>
-          <tbody>
-            {jobs.length === 0 ? (
+          <Table
+            className={classes.repairTable}
+            horizontalSpacing="lg"
+            verticalSpacing="md"
+            highlightOnHover
+          >
+            <thead>
               <tr>
-                <td className={classes.cell} colSpan={8}>
-                  <Text size="sm" c="dimmed" ta="center">No repair jobs found.</Text>
-                </td>
+                <th className={classes.headerCell}>Job Reference</th>
+                <th className={classes.headerCell}>Customer</th>
+                <th className={classes.headerCell}>Equipment</th>
+                <th className={classes.headerCell}>Issue</th>
+                <th className={classes.headerCell}>Status</th>
+                <th className={classes.headerCell}>Technician</th>
+                <th className={classes.headerCell}>Date Received</th>
+                <th className={classes.headerCell}>Actions</th>
               </tr>
-            ) : jobs.map((job) => (
-              <tr key={job.reference}>
-                <td className={classes.cell}>
-                  <Text size="sm" fw={600}>
-                    {job.reference}
-                  </Text>
-                </td>
-                <td className={classes.cell}>{job.customer}</td>
-                <td className={classes.cell}>{job.equipment}</td>
-                <td className={classes.cell}>{job.issue}</td>
-                <td className={classes.cell}>
-                  <StatusBadge status={job.status} />
-                </td>
-                <td className={classes.cell}>{job.technician}</td>
-                <td className={classes.cell}>{job.dateReceived}</td>
-                <td className={classes.cell}>
-                  <ActionIcon variant="subtle" color="gray">
-                    <IconDotsVertical size={16} />
-                  </ActionIcon>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {jobs.length === 0 ? (
+                <tr>
+                  <td className={classes.cell} colSpan={8}>
+                    <Text size="sm" c="dimmed" ta="center">
+                      No repair jobs found.
+                    </Text>
+                  </td>
+                </tr>
+              ) : (
+                jobs.map((job) => (
+                  <tr key={job.reference}>
+                    <td className={classes.cell}>
+                      <Text size="sm" fw={600}>
+                        {job.reference}
+                      </Text>
+                    </td>
+                    <td className={classes.cell}>{job.customer}</td>
+                    <td className={classes.cell}>{job.equipment}</td>
+                    <td className={classes.cell}>{job.issue}</td>
+                    <td className={classes.cell}>
+                      <StatusBadge status={job.status} />
+                    </td>
+                    <td className={classes.cell}>{job.technician}</td>
+                    <td className={classes.cell}>{job.dateReceived}</td>
+                    <td className={classes.cell}>
+                      <ActionIcon variant="subtle" color="gray">
+                        <IconDotsVertical size={16} />
+                      </ActionIcon>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </Table>
         )}
       </div>
     </Card>

@@ -1,6 +1,6 @@
 import { AppointmentStatus, RepairJobStatus } from '../generated/prisma/client';
-import { prisma } from './prisma';
 import { getDashboardData } from './dashboard';
+import { prisma } from './prisma';
 
 jest.mock('server-only', () => ({}));
 jest.mock('next/cache', () => ({ cacheLife: jest.fn() }));
@@ -23,10 +23,11 @@ describe('getDashboardData', () => {
   });
 
   it('aggregates summary counts, chart totals, jobs, attention items, and today schedule', async () => {
-    jest.mocked(prisma.repairJob.groupBy).mockResolvedValue([
-      { status: RepairJobStatus.AwaitingParts, _count: { _all: 2 } },
-    ] as never);
-    jest.mocked(prisma.repairJob.findMany)
+    jest
+      .mocked(prisma.repairJob.groupBy)
+      .mockResolvedValue([{ status: RepairJobStatus.AwaitingParts, _count: { _all: 2 } }] as never);
+    jest
+      .mocked(prisma.repairJob.findMany)
       .mockResolvedValueOnce([
         {
           reference: 'JOB-1',
@@ -48,8 +49,14 @@ describe('getDashboardData', () => {
         },
       ] as never)
       .mockResolvedValueOnce([
-        { dateReceived: new Date('2026-10-21T10:00:00.000Z'), status: RepairJobStatus.ReadyForCollection },
-        { dateReceived: new Date('2026-10-21T11:00:00.000Z'), status: RepairJobStatus.AwaitingParts },
+        {
+          dateReceived: new Date('2026-10-21T10:00:00.000Z'),
+          status: RepairJobStatus.ReadyForCollection,
+        },
+        {
+          dateReceived: new Date('2026-10-21T11:00:00.000Z'),
+          status: RepairJobStatus.AwaitingParts,
+        },
         { dateReceived: new Date('2026-10-10T11:00:00.000Z'), status: RepairJobStatus.Overdue },
       ] as never);
     jest.mocked(prisma.appointment.findMany).mockResolvedValue([

@@ -1,8 +1,8 @@
 'use client';
 
-import { Card, Group, Stack, Table, Text, TextInput } from '@mantine/core';
-import { IconSearch } from '@tabler/icons-react';
 import { useState } from 'react';
+import { IconSearch } from '@tabler/icons-react';
+import { Card, Group, Stack, Table, Text, TextInput } from '@mantine/core';
 import classes from './DataTable.module.css';
 
 export interface CustomerGridRow {
@@ -31,20 +31,23 @@ function formatUtcDate(value: Date | string) {
 export function CustomersPage({ customers }: { customers: CustomerGridRow[] }) {
   const [query, setQuery] = useState('');
   const filteredCustomers = customers.filter((customer) =>
-    Object.values(customer)
-      .join(' ')
-      .toLowerCase()
-      .includes(query.toLowerCase()),
+    Object.values(customer).join(' ').toLowerCase().includes(query.toLowerCase())
   );
 
   return (
     <Stack gap="lg">
       <Group justify="space-between" align="flex-end">
         <div>
-          <Text size="xl" fw={700}>Customers</Text>
-          <Text size="sm" c="dimmed">Manage your customer directory</Text>
+          <Text size="xl" fw={700}>
+            Customers
+          </Text>
+          <Text size="sm" c="dimmed">
+            Manage your customer directory
+          </Text>
         </div>
-        <Text size="sm" c="dimmed">{customers.length} customers</Text>
+        <Text size="sm" c="dimmed">
+          {customers.length} customers
+        </Text>
       </Group>
 
       <Card withBorder radius="md" padding="lg">
@@ -105,9 +108,17 @@ export function CustomersPage({ customers }: { customers: CustomerGridRow[] }) {
                     <td className={classes.cell}>{customer.county || '—'}</td>
                     <td className={classes.cell}>{customer.postcode || '—'}</td>
                     <td className={classes.cell}>{customer.country || '—'}</td>
-                    <td className={classes.notesCell}><Text size="sm" lineClamp={2}>{customer.notes || '—'}</Text></td>
+                    <td className={classes.notesCell}>
+                      <Text size="sm" lineClamp={2}>
+                        {customer.notes || '—'}
+                      </Text>
+                    </td>
                     <td className={classes.cell}>
-                      <span className={customer.isActive ? classes.activeStatus : classes.inactiveStatus}>
+                      <span
+                        className={
+                          customer.isActive ? classes.activeStatus : classes.inactiveStatus
+                        }
+                      >
                         {customer.isActive ? 'Active' : 'Inactive'}
                       </span>
                     </td>
@@ -119,7 +130,9 @@ export function CustomersPage({ customers }: { customers: CustomerGridRow[] }) {
                 <tr>
                   <td colSpan={16}>
                     <Text ta="center" c="dimmed" py="lg">
-                      {customers.length === 0 ? 'No customers found.' : 'No customers match your search.'}
+                      {customers.length === 0
+                        ? 'No customers found.'
+                        : 'No customers match your search.'}
                     </Text>
                   </td>
                 </tr>

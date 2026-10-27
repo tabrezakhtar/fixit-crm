@@ -1,8 +1,8 @@
 'use client';
 
+import type { ReactNode } from 'react';
 import { AppShell, AppShellHeader, AppShellMain, AppShellNavbar, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import type { ReactNode } from 'react';
 import { DashboardHeader } from './DashboardHeader';
 import { DashboardSidebar } from './DashboardSidebar';
 import classes from './DashboardShell.module.css';

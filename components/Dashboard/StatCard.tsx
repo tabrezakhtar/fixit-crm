@@ -1,6 +1,5 @@
 'use client';
 
-import { Card, Group, Loader, Text, ThemeIcon } from '@mantine/core';
 import {
   IconAlertTriangle,
   IconBox,
@@ -12,6 +11,7 @@ import {
   IconTrendingDown,
   IconTrendingUp,
 } from '@tabler/icons-react';
+import { Card, Group, Loader, Text, ThemeIcon } from '@mantine/core';
 import type { SummaryCardData } from './data';
 import classes from './StatCard.module.css';
 
@@ -25,7 +25,15 @@ const ICONS: Record<string, typeof IconTool> = {
   approval: IconFileInvoice,
 };
 
-export function StatCard({ label, value, delta, trend, color, icon, loading }: SummaryCardData & { loading: boolean }) {
+export function StatCard({
+  label,
+  value,
+  delta,
+  trend,
+  color,
+  icon,
+  loading,
+}: SummaryCardData & { loading: boolean }) {
   const Icon = ICONS[icon];
   const TrendIcon = trend === 'down' ? IconTrendingDown : IconTrendingUp;
 
@@ -36,7 +44,13 @@ export function StatCard({ label, value, delta, trend, color, icon, loading }: S
           <Text size="sm" c="dimmed" fw={500}>
             {label}
           </Text>
-          {loading ? <Loader size="sm" mt={12} aria-label={`Loading ${label}`} /> : <Text fz={28} fw={700} mt={4}>{value}</Text>}
+          {loading ? (
+            <Loader size="sm" mt={12} aria-label={`Loading ${label}`} />
+          ) : (
+            <Text fz={28} fw={700} mt={4}>
+              {value}
+            </Text>
+          )}
         </div>
         <ThemeIcon color={color} variant="light" size={42} radius="md">
           <Icon size={22} stroke={1.6} />

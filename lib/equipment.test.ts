@@ -1,6 +1,6 @@
 import { RepairJobStatus } from '../generated/prisma/client';
-import { prisma } from './prisma';
 import { getEquipmentModels } from './equipment';
+import { prisma } from './prisma';
 
 jest.mock('server-only', () => ({}));
 jest.mock('next/cache', () => ({ cacheLife: jest.fn() }));

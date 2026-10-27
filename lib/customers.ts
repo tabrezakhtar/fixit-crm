@@ -1,5 +1,5 @@
-import 'server-only';
 import { cacheLife } from 'next/cache';
+import 'server-only';
 import { prisma } from './prisma';
 
 const customerSelect = {

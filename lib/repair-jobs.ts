@@ -1,7 +1,7 @@
-import 'server-only';
 import { cacheLife } from 'next/cache';
-import { RepairJobStatus } from '../generated/prisma/client';
+import 'server-only';
 import type { JobStatus, RepairJobListItem } from '../components/Dashboard/data';
+import { RepairJobStatus } from '../generated/prisma/client';
 import { prisma } from './prisma';
 
 const jobStatusLabels: Record<RepairJobStatus, JobStatus> = {
@@ -32,7 +32,9 @@ export async function getRepairJobs(): Promise<RepairJobListItem[]> {
     equipment: job.equipment,
     issue: job.issue,
     status: jobStatusLabels[job.status],
-    technician: job.technician ? `${job.technician.firstName} ${job.technician.lastName}` : 'Unassigned',
+    technician: job.technician
+      ? `${job.technician.firstName} ${job.technician.lastName}`
+      : 'Unassigned',
     dateReceived: new Intl.DateTimeFormat('en-GB', {
       day: '2-digit',
       month: 'short',

@@ -22,8 +22,11 @@ describe('guest sessions', () => {
   });
 
   afterAll(() => {
-    if (originalSecret === undefined) delete process.env.SESSION_SECRET;
-    else process.env.SESSION_SECRET = originalSecret;
+    if (originalSecret === undefined) {
+      delete process.env.SESSION_SECRET;
+    } else {
+      process.env.SESSION_SECRET = originalSecret;
+    }
   });
 
   it('exports the expected session cookie name', () => {

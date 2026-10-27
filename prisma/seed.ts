@@ -1,7 +1,7 @@
-import 'dotenv/config';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { AppointmentStatus, PrismaClient } from '../generated/prisma/client';
+import 'dotenv/config';
 import { todaySchedule } from '../components/Dashboard/data';
+import { AppointmentStatus, PrismaClient } from '../generated/prisma/client';
 import { customers, repairJobs } from './seed-data';
 
 const connectionString = process.env.DATABASE_URL;
@@ -46,9 +46,12 @@ const seedDates = [
   ...customers.flatMap((customer) => [customer.createdAt, customer.updatedAt]),
   ...repairJobs.map((job) => parseReceivedDate(job.dateReceived)),
 ];
-const seedReferenceDay = Math.max(
-  ...seedDates.map((date) => Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()))
-) + 86_400_000;
+const seedReferenceDay =
+  Math.max(
+    ...seedDates.map((date) =>
+      Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
+    )
+  ) + 86_400_000;
 
 function shiftSeedDateToToday(value: Date): Date {
   const valueDay = Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate());
@@ -109,7 +112,10 @@ async function seed() {
       select: { id: true, firstName: true, lastName: true },
     });
     const technicianIds = new Map(
-      technicians.map((technician) => [`${technician.firstName} ${technician.lastName}`, technician.id])
+      technicians.map((technician) => [
+        `${technician.firstName} ${technician.lastName}`,
+        technician.id,
+      ])
     );
 
     await transaction.repairJob.createMany({
@@ -135,14 +141,16 @@ async function seed() {
     });
   });
 
-  console.log(
-    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, and ${todaySchedule.length} appointments.`
+  process.stdout.write(
+    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, and ${todaySchedule.length} appointments.\n`
   );
 }
 
 seed()
   .catch((error: unknown) => {
-    console.error('Database seed failed:', error);
+    process.stderr.write(
+      `Database seed failed: ${error instanceof Error ? (error.stack ?? error.message) : String(error)}\n`
+    );
     process.exitCode = 1;
   })
   .finally(async () => {

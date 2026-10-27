@@ -37,7 +37,7 @@ describe('getRepairJobs', () => {
       },
     ]);
     expect(prisma.repairJob.findMany).toHaveBeenCalledWith(
-      expect.objectContaining({ orderBy: [{ dateReceived: 'desc' }, { id: 'desc' }] }),
+      expect.objectContaining({ orderBy: [{ dateReceived: 'desc' }, { id: 'desc' }] })
     );
   });
 });
