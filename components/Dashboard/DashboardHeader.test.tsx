@@ -11,4 +11,12 @@ describe('DashboardHeader', () => {
 
     expect(screen.getByText('Appointments & Schedule')).toBeInTheDocument();
   });
+
+  it('links the logo to the default dashboard page', () => {
+    render(<DashboardHeader />);
+
+    const logo = screen.getByRole('img', { name: 'FixitCRM logo' });
+
+    expect(logo.closest('a')).toHaveAttribute('href', '/dashboard');
+  });
 });

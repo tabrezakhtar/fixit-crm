@@ -2,6 +2,7 @@
 
 import type { ReactNode } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   IconBell,
@@ -57,14 +58,16 @@ export function DashboardHeader({ burger }: { burger?: ReactNode }) {
       <Group gap="md" wrap="nowrap">
         {burger}
         <div>
-          <Image
-            src="/fixitcrm-logo-header.png"
-            alt="FixitCRM logo"
-            width={2078}
-            height={757}
-            className={classes.logo}
-            priority
-          />
+          <Link href="/dashboard">
+            <Image
+              src="/fixitcrm-logo-header.png"
+              alt="FixitCRM logo"
+              width={2078}
+              height={757}
+              className={classes.logo}
+              priority
+            />
+          </Link>
           <Breadcrumbs separator={<IconChevronRight size={12} />} className={classes.breadcrumbs}>
             <Text size="xs" c="dimmed">
               Home
