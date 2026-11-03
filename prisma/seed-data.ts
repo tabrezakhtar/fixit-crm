@@ -1,4 +1,4 @@
-import { RepairJobStatus } from '../generated/prisma/client';
+import { QuoteStatus, RepairJobStatus } from '../generated/prisma/client';
 
 export const customers = [
   {
@@ -597,5 +597,68 @@ export const repairJobs = [
     status: RepairJobStatus.AwaitingApproval,
     technician: 'James Carter',
     dateReceived: '04 Oct 2026',
+  },
+];
+
+export const quotes = [
+  {
+    reference: 'QT-3101',
+    customer: 'Grace Lin',
+    repairJob: 'RJ-2045',
+    status: QuoteStatus.Sent,
+    issuedAt: '12 Oct 2026',
+    validUntil: '26 Oct 2026',
+    items: [
+      { description: 'MacBook keyboard assembly', quantity: 1, unitPricePence: 12900 },
+      { description: 'Labour and testing', quantity: 1, unitPricePence: 6500 },
+    ],
+  },
+  {
+    reference: 'QT-3102',
+    customer: 'Tom Holloway',
+    repairJob: 'RJ-2044',
+    status: QuoteStatus.Draft,
+    issuedAt: '13 Oct 2026',
+    validUntil: '27 Oct 2026',
+    items: [
+      { description: 'Diagnostic assessment', quantity: 1, unitPricePence: 4500 },
+      { description: 'Pixel 8 power circuit repair', quantity: 1, unitPricePence: 8950 },
+    ],
+  },
+  {
+    reference: 'QT-3103',
+    customer: 'Hannah Clarke',
+    repairJob: 'RJ-2061',
+    status: QuoteStatus.Accepted,
+    issuedAt: '11 Oct 2026',
+    validUntil: '25 Oct 2026',
+    items: [
+      { description: 'iPad Pro display assembly', quantity: 1, unitPricePence: 21900 },
+      { description: 'Labour and calibration', quantity: 1, unitPricePence: 7900 },
+    ],
+  },
+  {
+    reference: 'QT-3104',
+    customer: 'Daniel Okafor',
+    repairJob: 'RJ-2062',
+    status: QuoteStatus.Sent,
+    issuedAt: '10 Oct 2026',
+    validUntil: '24 Oct 2026',
+    items: [
+      { description: 'SSD diagnostics and recovery', quantity: 1, unitPricePence: 8500 },
+      { description: 'Boot drive replacement', quantity: 1, unitPricePence: 11900 },
+    ],
+  },
+  {
+    reference: 'QT-3105',
+    customer: 'Emily Rosen',
+    repairJob: 'RJ-2063',
+    status: QuoteStatus.Declined,
+    issuedAt: '09 Oct 2026',
+    validUntil: '23 Oct 2026',
+    items: [
+      { description: 'Battery replacement', quantity: 1, unitPricePence: 16900 },
+      { description: 'Safety inspection', quantity: 1, unitPricePence: 3500 },
+    ],
   },
 ];

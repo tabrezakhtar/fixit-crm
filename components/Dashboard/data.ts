@@ -32,7 +32,7 @@ export const primaryNavItems: NavItem[] = [
   { label: 'Customers', icon: IconUsers, href: '/dashboard/customers' },
   { label: 'Equipment', icon: IconDeviceLaptop, href: '/dashboard/equipment' },
   { label: 'Appointments & Schedule', icon: IconCalendarEvent, href: '/dashboard/appointments' },
-  { label: 'Quotes & Estimates', icon: IconFileInvoice },
+  { label: 'Quotes & Estimates', icon: IconFileInvoice, href: '/dashboard/quotes' },
   { label: 'Parts & Inventory', icon: IconBox },
   { label: 'Invoices & Payments', icon: IconCreditCard },
   { label: 'Technicians', icon: IconUserCog },
@@ -110,6 +110,20 @@ export interface Customer {
   phone: string;
   repairJobs: number;
   lastVisit: string;
+}
+
+export type QuoteStatusLabel = 'Draft' | 'Sent' | 'Accepted' | 'Declined' | 'Expired';
+
+export interface QuoteListItem {
+  reference: string;
+  customer: string;
+  customerEmail: string;
+  repairReference: string;
+  equipment: string;
+  status: QuoteStatusLabel;
+  totalPence: number;
+  issuedAt: string;
+  validUntil: string;
 }
 
 export interface AttentionItem {

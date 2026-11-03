@@ -35,6 +35,7 @@
     "dayjs": "^1.11.23",
     "jose": "^6.2.12",
     "next": "16.3.8",
+    "pdfkit": "^0.20.2",
     "pg": "^8.23.1",
     "react": "19.3.0",
     "react-dom": "19.3.0"
@@ -47,6 +48,7 @@
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.0.0",
+    "@types/pdfkit": "^0.17.7",
     "@types/react": "19.3.0",
     "babel-loader": "^10.0.0",
     "dotenv": "^18.0.7",

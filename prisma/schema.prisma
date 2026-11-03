@@ -26,6 +26,16 @@ enum AppointmentStatus {
   @@map("appointment_status")
 }
 
+enum QuoteStatus {
+  Draft    @map("Draft")
+  Sent     @map("Sent")
+  Accepted @map("Accepted")
+  Declined @map("Declined")
+  Expired  @map("Expired")
+
+  @@map("quote_status")
+}
+
 model Customer {
   id           BigInt   @id
   firstName    String   @map("first_name") @db.VarChar(100)
@@ -45,6 +55,7 @@ model Customer {
   updatedAt    DateTime @default(now()) @map("updated_at") @db.Timestamptz(6)
   repairJobs   RepairJob[]
   appointments Appointment[]
+  quotes       Quote[]
 
   @@map("customers")
 }
@@ -76,11 +87,44 @@ model RepairJob {
   technician   Technician?     @relation(fields: [technicianId], references: [id], onDelete: SetNull)
   createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
+  quotes       Quote[]
 
   @@index([customerId, dateReceived])
   @@index([technicianId, status])
   @@index([status, dateReceived])
   @@map("repair_jobs")
+}
+
+model Quote {
+  id           BigInt      @id @default(autoincrement())
+  reference    String      @unique @db.VarChar(30)
+  customerId   BigInt      @map("customer_id")
+  repairJobId  BigInt?     @map("repair_job_id")
+  status       QuoteStatus @default(Draft)
+  issuedAt     DateTime    @map("issued_at") @db.Date
+  validUntil   DateTime    @map("valid_until") @db.Date
+  customer     Customer    @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  repairJob    RepairJob?  @relation(fields: [repairJobId], references: [id], onDelete: SetNull)
+  items        QuoteItem[]
+  createdAt    DateTime    @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt    DateTime    @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([customerId, issuedAt])
+  @@index([repairJobId])
+  @@index([status, validUntil])
+  @@map("quotes")
+}
+
+model QuoteItem {
+  id             BigInt @id @default(autoincrement())
+  quoteId        BigInt @map("quote_id")
+  description    String @db.VarChar(255)
+  quantity       Int
+  unitPricePence Int    @map("unit_price_pence")
+  quote          Quote  @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+
+  @@index([quoteId])
+  @@map("quote_items")
 }
 
 model Appointment {

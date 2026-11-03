@@ -2,7 +2,8 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 import { todaySchedule } from '../components/Dashboard/data';
 import { AppointmentStatus, PrismaClient } from '../generated/prisma/client';
-import { customers, repairJobs } from './seed-data';
+import { customers, quotes, repairJobs } from './seed-data';
+import { createSeedDateShifter } from './seed-date';
 
 const connectionString = process.env.DATABASE_URL;
 
@@ -32,11 +33,11 @@ function getCustomerId(name: string): bigint {
   return customerId;
 }
 
-function parseReceivedDate(value: string): Date {
+function parseSeedDate(value: string): Date {
   const date = new Date(`${value} UTC`);
 
   if (Number.isNaN(date.getTime())) {
-    throw new Error(`Invalid repair job date: "${value}".`);
+    throw new Error(`Invalid seed date: "${value}".`);
   }
 
   return date;
@@ -44,32 +45,10 @@ function parseReceivedDate(value: string): Date {
 
 const seedDates = [
   ...customers.flatMap((customer) => [customer.createdAt, customer.updatedAt]),
-  ...repairJobs.map((job) => parseReceivedDate(job.dateReceived)),
+  ...repairJobs.map((job) => parseSeedDate(job.dateReceived)),
+  ...quotes.map((quote) => parseSeedDate(quote.issuedAt)),
 ];
-const seedReferenceDay =
-  Math.max(
-    ...seedDates.map((date) =>
-      Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate())
-    )
-  ) + 86_400_000;
-
-function shiftSeedDateToToday(value: Date): Date {
-  const valueDay = Date.UTC(value.getUTCFullYear(), value.getUTCMonth(), value.getUTCDate());
-  const daysFromReference = Math.round((valueDay - seedReferenceDay) / 86_400_000);
-  const today = new Date();
-
-  return new Date(
-    Date.UTC(
-      today.getUTCFullYear(),
-      today.getUTCMonth(),
-      today.getUTCDate() + daysFromReference,
-      value.getUTCHours(),
-      value.getUTCMinutes(),
-      value.getUTCSeconds(),
-      value.getUTCMilliseconds()
-    )
-  );
-}
+const shiftSeedDateToToday = createSeedDateShifter(seedDates);
 
 function appointmentDate(time: string, daysFromToday = 0): Date {
   const [hours, minutes] = time.split(':').map(Number);
@@ -89,6 +68,7 @@ async function seed() {
 
   await prisma.$transaction(async (transaction) => {
     await transaction.appointment.deleteMany();
+    await transaction.quote.deleteMany();
     await transaction.repairJob.deleteMany();
     await transaction.technician.deleteMany();
     await transaction.customer.deleteMany();
@@ -126,8 +106,38 @@ async function seed() {
         issue: job.issue,
         status: job.status,
         technicianId: technicianIds.get(job.technician),
-        dateReceived: shiftSeedDateToToday(parseReceivedDate(job.dateReceived)),
+        dateReceived: shiftSeedDateToToday(parseSeedDate(job.dateReceived)),
       })),
+    });
+
+    const seededRepairJobs = await transaction.repairJob.findMany({
+      select: { id: true, reference: true },
+    });
+    const repairJobIds = new Map(seededRepairJobs.map((job) => [job.reference, job.id]));
+
+    await transaction.quote.createMany({
+      data: quotes.map((quote) => ({
+        reference: quote.reference,
+        customerId: getCustomerId(quote.customer),
+        repairJobId: repairJobIds.get(quote.repairJob),
+        status: quote.status,
+        issuedAt: shiftSeedDateToToday(parseSeedDate(quote.issuedAt)),
+        validUntil: shiftSeedDateToToday(parseSeedDate(quote.validUntil)),
+      })),
+    });
+
+    const seededQuotes = await transaction.quote.findMany({
+      select: { id: true, reference: true },
+    });
+    const quoteIds = new Map(seededQuotes.map((quote) => [quote.reference, quote.id]));
+
+    await transaction.quoteItem.createMany({
+      data: quotes.flatMap((quote) =>
+        quote.items.map((item) => ({
+          quoteId: quoteIds.get(quote.reference)!,
+          ...item,
+        }))
+      ),
     });
 
     await transaction.appointment.createMany({
@@ -142,7 +152,7 @@ async function seed() {
   });
 
   process.stdout.write(
-    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, and ${todaySchedule.length} appointments.\n`
+    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, ${quotes.length} quotes, and ${todaySchedule.length} appointments.\n`
   );
 }
 
