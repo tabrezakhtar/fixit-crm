@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { IconSearch } from '@tabler/icons-react';
+import { IconCalendarEvent, IconSearch } from '@tabler/icons-react';
 import {
   Avatar,
   Badge,
@@ -26,16 +26,6 @@ function workloadLabel(openJobs: number): string {
   if (openJobs === 0) return 'Available';
   if (openJobs >= 4) return 'Busy';
   return 'Assigned';
-}
-
-function initials(name: string): string {
-  return name
-    .split(' ')
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0])
-    .join('')
-    .toUpperCase();
 }
 
 export function TechniciansPage({ technicians }: { technicians: TechnicianListItem[] }) {
@@ -108,8 +98,8 @@ export function TechniciansPage({ technicians }: { technicians: TechnicianListIt
         </Card>
       </Group>
 
-      <Card withBorder radius="md" padding="lg">
-        <Group justify="space-between" mb="md">
+      <Stack gap="md">
+        <Group justify="space-between" align="flex-end">
           <div>
             <Text fw={600}>Team roster</Text>
             <Text size="xs" c="dimmed">
@@ -144,31 +134,41 @@ export function TechniciansPage({ technicians }: { technicians: TechnicianListIt
                 className={classes.technicianCard}
                 withBorder
                 radius="sm"
-                padding="md"
+                padding="lg"
               >
-                <Stack gap="md">
-                  <Group justify="space-between" wrap="nowrap" align="flex-start">
-                    <Group wrap="nowrap" align="center">
-                      <Avatar color={technician.isActive ? 'blue' : 'gray'} radius="xl" size="lg">
-                        {initials(technician.name)}
-                      </Avatar>
+                <Card.Section inheritPadding py="md" className={classes.identitySection}>
+                  <Group justify="space-between" wrap="nowrap" align="center">
+                    <Group wrap="nowrap" align="center" gap="sm">
+                      <Avatar
+                        name={technician.name}
+                        color="initials"
+                        radius="xl"
+                        size={48}
+                        aria-label={`${technician.name} avatar`}
+                      />
                       <div>
-                        <Text size="sm" fw={600}>
+                        <Text size="md" fw={700}>
                           {technician.name}
                         </Text>
                         <Text size="xs" className={classes.secondaryText}>
-                          {technician.isActive ? 'Active technician' : 'Inactive technician'}
+                          Technician
                         </Text>
                       </div>
                     </Group>
-                    <Badge variant="light" color={technician.isActive ? 'green' : 'gray'}>
+                    <Badge
+                      variant="light"
+                      color={technician.isActive ? 'green' : 'gray'}
+                      size="sm"
+                    >
                       {technician.isActive ? 'Active' : 'Inactive'}
                     </Badge>
                   </Group>
+                </Card.Section>
 
-                  <Group justify="space-between">
-                    <Text size="xs" className={classes.secondaryText}>
-                      Workload
+                <Card.Section inheritPadding py="sm" className={classes.workloadSection}>
+                  <Group justify="space-between" align="center">
+                    <Text size="sm" fw={600}>
+                      Current workload
                     </Text>
                     <Badge
                       variant="light"
@@ -179,46 +179,50 @@ export function TechniciansPage({ technicians }: { technicians: TechnicianListIt
                             ? 'orange'
                             : 'blue'
                       }
+                      size="md"
                     >
                       {workloadLabel(technician.openJobs)}
                     </Badge>
                   </Group>
+                </Card.Section>
 
-                  <Group grow>
-                    <div>
+                <Card.Section inheritPadding py="md" className={classes.metricsSection}>
+                  <SimpleGrid cols={3} spacing={0}>
+                    <div className={classes.metric}>
                       <Text size="xs" className={classes.secondaryText}>
                         Open repairs
                       </Text>
-                      <Text size="md" fw={700}>
+                      <Text size="xl" fw={700}>
                         {technician.openJobs}
                       </Text>
                     </div>
-                    <div>
+                    <div className={classes.metric}>
                       <Text size="xs" className={classes.secondaryText}>
                         Assigned
                       </Text>
-                      <Text size="md" fw={700}>
+                      <Text size="xl" fw={700}>
                         {technician.repairJobs}
                       </Text>
                     </div>
-                    <div>
+                    <div className={classes.metric}>
                       <Text size="xs" className={classes.secondaryText}>
                         Overdue
                       </Text>
-                      <Text
-                        size="md"
-                        fw={700}
-                        c={technician.overdueJobs > 0 ? 'red.7' : undefined}
-                      >
+                      <Text size="xl" fw={700} c={technician.overdueJobs > 0 ? 'red.7' : undefined}>
                         {technician.overdueJobs}
                       </Text>
                     </div>
-                  </Group>
+                  </SimpleGrid>
+                </Card.Section>
 
-                  <Text size="xs" className={classes.secondaryText}>
-                    {technician.appointments} appointments
-                  </Text>
-                </Stack>
+                <Card.Section inheritPadding py="sm" className={classes.appointmentsSection}>
+                  <Group gap="xs" c="dimmed">
+                    <IconCalendarEvent size={16} aria-hidden="true" />
+                    <Text size="sm" fw={500}>
+                      {technician.appointments} appointments
+                    </Text>
+                  </Group>
+                </Card.Section>
               </Card>
             ))}
           </SimpleGrid>
@@ -229,7 +233,7 @@ export function TechniciansPage({ technicians }: { technicians: TechnicianListIt
               : 'No technicians match your filters.'}
           </Text>
         )}
-      </Card>
+      </Stack>
     </Stack>
   );
 }
