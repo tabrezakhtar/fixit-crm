@@ -1,4 +1,9 @@
-import { QuoteStatus, RepairJobStatus } from '../generated/prisma/client';
+import {
+  InvoiceStatus,
+  PaymentMethod,
+  QuoteStatus,
+  RepairJobStatus,
+} from '../generated/prisma/client';
 
 export const customers = [
   {
@@ -763,5 +768,106 @@ export const inventoryItems = [
     reorderLevel: 2,
     unitCostPence: 14750,
     location: 'A1-05',
+  },
+];
+
+export const invoices = [
+  {
+    reference: 'INV-4101',
+    customer: 'Sarah Mitchell',
+    repairJob: 'RJ-2041',
+    status: InvoiceStatus.Sent,
+    issuedAt: '13 Oct 2026',
+    dueAt: '27 Oct 2026',
+    items: [
+      { description: 'Dell XPS 15 screen assembly', quantity: 1, unitPricePence: 18900 },
+      { description: 'Labour and display calibration', quantity: 1, unitPricePence: 7900 },
+    ],
+    payments: [],
+  },
+  {
+    reference: 'INV-4102',
+    customer: 'Marcus Webb',
+    repairJob: 'RJ-2049',
+    status: InvoiceStatus.PartiallyPaid,
+    issuedAt: '12 Oct 2026',
+    dueAt: '26 Oct 2026',
+    items: [
+      { description: 'Amplifier diagnostics', quantity: 1, unitPricePence: 6500 },
+      { description: 'Output stage repair', quantity: 1, unitPricePence: 12800 },
+    ],
+    payments: [
+      {
+        amountPence: 6500,
+        method: PaymentMethod.Card,
+        reference: 'CARD-82041',
+        paidAt: '13 Oct 2026',
+      },
+    ],
+  },
+  {
+    reference: 'INV-4103',
+    customer: 'Priya Anand',
+    repairJob: 'RJ-2050',
+    status: InvoiceStatus.Paid,
+    issuedAt: '11 Oct 2026',
+    dueAt: '25 Oct 2026',
+    items: [
+      { description: 'iPhone 13 battery replacement', quantity: 1, unitPricePence: 7900 },
+      { description: 'Battery health test', quantity: 1, unitPricePence: 2500 },
+    ],
+    payments: [
+      {
+        amountPence: 10400,
+        method: PaymentMethod.Card,
+        reference: 'CARD-82042',
+        paidAt: '12 Oct 2026',
+      },
+    ],
+  },
+  {
+    reference: 'INV-4104',
+    customer: 'Oliver Bennett',
+    repairJob: 'RJ-2046',
+    status: InvoiceStatus.Overdue,
+    issuedAt: '03 Oct 2026',
+    dueAt: '10 Oct 2026',
+    items: [
+      { description: 'iPhone 14 screen replacement', quantity: 1, unitPricePence: 14900 },
+      { description: 'Water resistance seal', quantity: 1, unitPricePence: 1800 },
+    ],
+    payments: [],
+  },
+  {
+    reference: 'INV-4105',
+    customer: 'Hannah Clarke',
+    repairJob: 'RJ-2061',
+    status: InvoiceStatus.Paid,
+    issuedAt: '10 Oct 2026',
+    dueAt: '24 Oct 2026',
+    items: [
+      { description: 'iPad Pro display assembly', quantity: 1, unitPricePence: 21900 },
+      { description: 'Labour and calibration', quantity: 1, unitPricePence: 7900 },
+    ],
+    payments: [
+      {
+        amountPence: 29800,
+        method: PaymentMethod.BankTransfer,
+        reference: 'BANK-55218',
+        paidAt: '11 Oct 2026',
+      },
+    ],
+  },
+  {
+    reference: 'INV-4106',
+    customer: 'Tom Holloway',
+    repairJob: 'RJ-2044',
+    status: InvoiceStatus.Draft,
+    issuedAt: '13 Oct 2026',
+    dueAt: '28 Oct 2026',
+    items: [
+      { description: 'Pixel 8 diagnostic assessment', quantity: 1, unitPricePence: 4500 },
+    ],
+    payments: [],
   },
 ];

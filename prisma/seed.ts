@@ -2,7 +2,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 import { todaySchedule } from '../components/Dashboard/data';
 import { AppointmentStatus, PrismaClient } from '../generated/prisma/client';
-import { customers, inventoryItems, quotes, repairJobs } from './seed-data';
+import { customers, inventoryItems, invoices, quotes, repairJobs } from './seed-data';
 import { createSeedDateShifter } from './seed-date';
 
 const connectionString = process.env.DATABASE_URL;
@@ -47,6 +47,10 @@ const seedDates = [
   ...customers.flatMap((customer) => [customer.createdAt, customer.updatedAt]),
   ...repairJobs.map((job) => parseSeedDate(job.dateReceived)),
   ...quotes.map((quote) => parseSeedDate(quote.issuedAt)),
+  ...invoices.flatMap((invoice) => [
+    parseSeedDate(invoice.issuedAt),
+    ...invoice.payments.map((payment) => parseSeedDate(payment.paidAt)),
+  ]),
 ];
 const shiftSeedDateToToday = createSeedDateShifter(seedDates);
 
@@ -69,6 +73,9 @@ async function seed() {
   await prisma.$transaction(async (transaction) => {
     await transaction.appointment.deleteMany();
     await transaction.inventoryItem.deleteMany();
+    await transaction.payment.deleteMany();
+    await transaction.invoiceItem.deleteMany();
+    await transaction.invoice.deleteMany();
     await transaction.quote.deleteMany();
     await transaction.repairJob.deleteMany();
     await transaction.technician.deleteMany();
@@ -141,6 +148,41 @@ async function seed() {
       ),
     });
 
+    await transaction.invoice.createMany({
+      data: invoices.map((invoice) => ({
+        reference: invoice.reference,
+        customerId: getCustomerId(invoice.customer),
+        repairJobId: repairJobIds.get(invoice.repairJob),
+        status: invoice.status,
+        issuedAt: shiftSeedDateToToday(parseSeedDate(invoice.issuedAt)),
+        dueAt: shiftSeedDateToToday(parseSeedDate(invoice.dueAt)),
+      })),
+    });
+
+    const seededInvoices = await transaction.invoice.findMany({
+      select: { id: true, reference: true },
+    });
+    const invoiceIds = new Map(seededInvoices.map((invoice) => [invoice.reference, invoice.id]));
+
+    await transaction.invoiceItem.createMany({
+      data: invoices.flatMap((invoice) =>
+        invoice.items.map((item) => ({
+          invoiceId: invoiceIds.get(invoice.reference)!,
+          ...item,
+        }))
+      ),
+    });
+
+    await transaction.payment.createMany({
+      data: invoices.flatMap((invoice) =>
+        invoice.payments.map((payment) => ({
+          invoiceId: invoiceIds.get(invoice.reference)!,
+          ...payment,
+          paidAt: shiftSeedDateToToday(parseSeedDate(payment.paidAt)),
+        }))
+      ),
+    });
+
     await transaction.inventoryItem.createMany({ data: inventoryItems });
 
     await transaction.appointment.createMany({
@@ -155,7 +197,7 @@ async function seed() {
   });
 
   process.stdout.write(
-    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, ${quotes.length} quotes, ${inventoryItems.length} inventory items, and ${todaySchedule.length} appointments.\n`
+    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, ${quotes.length} quotes, ${invoices.length} invoices, ${inventoryItems.length} inventory items, and ${todaySchedule.length} appointments.\n`
   );
 }
 

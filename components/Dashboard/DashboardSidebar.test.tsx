@@ -22,5 +22,9 @@ describe('DashboardSidebar', () => {
       'href',
       '/dashboard/inventory'
     );
+    expect(screen.getByRole('link', { name: 'Invoices & Payments' })).toHaveAttribute(
+      'href',
+      '/dashboard/invoices'
+    );
   });
 });

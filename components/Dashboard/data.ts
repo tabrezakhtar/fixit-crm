@@ -34,7 +34,7 @@ export const primaryNavItems: NavItem[] = [
   { label: 'Appointments & Schedule', icon: IconCalendarEvent, href: '/dashboard/appointments' },
   { label: 'Quotes & Estimates', icon: IconFileInvoice, href: '/dashboard/quotes' },
   { label: 'Parts & Inventory', icon: IconBox, href: '/dashboard/inventory' },
-  { label: 'Invoices & Payments', icon: IconCreditCard },
+  { label: 'Invoices & Payments', icon: IconCreditCard, href: '/dashboard/invoices' },
   { label: 'Technicians', icon: IconUserCog },
   { label: 'Reports', icon: IconChartBar },
 ];
@@ -138,6 +138,37 @@ export interface InventoryListItem {
   unitCostPence: number;
   location: string;
   stockStatus: InventoryStockStatus;
+}
+
+export type InvoiceStatusLabel =
+  | 'Draft'
+  | 'Sent'
+  | 'Partially paid'
+  | 'Paid'
+  | 'Overdue'
+  | 'Void';
+
+export interface InvoiceListItem {
+  reference: string;
+  customer: string;
+  customerEmail: string;
+  repairReference: string;
+  status: InvoiceStatusLabel;
+  totalPence: number;
+  paidPence: number;
+  outstandingPence: number;
+  issuedAt: string;
+  dueAt: string;
+  paymentCount: number;
+}
+
+export interface PaymentListItem {
+  invoiceReference: string;
+  customer: string;
+  amountPence: number;
+  method: string;
+  reference: string;
+  paidAt: string;
 }
 
 export interface AttentionItem {

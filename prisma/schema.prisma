@@ -36,6 +36,26 @@ enum QuoteStatus {
   @@map("quote_status")
 }
 
+enum InvoiceStatus {
+  Draft           @map("Draft")
+  Sent            @map("Sent")
+  PartiallyPaid   @map("Partially paid")
+  Paid            @map("Paid")
+  Overdue         @map("Overdue")
+  Void            @map("Void")
+
+  @@map("invoice_status")
+}
+
+enum PaymentMethod {
+  Cash          @map("Cash")
+  Card          @map("Card")
+  BankTransfer  @map("Bank transfer")
+  Other         @map("Other")
+
+  @@map("payment_method")
+}
+
 model Customer {
   id           BigInt   @id
   firstName    String   @map("first_name") @db.VarChar(100)
@@ -56,6 +76,7 @@ model Customer {
   repairJobs   RepairJob[]
   appointments Appointment[]
   quotes       Quote[]
+  invoices     Invoice[]
 
   @@map("customers")
 }
@@ -88,6 +109,7 @@ model RepairJob {
   createdAt    DateTime        @default(now()) @map("created_at") @db.Timestamptz(6)
   updatedAt    DateTime        @updatedAt @map("updated_at") @db.Timestamptz(6)
   quotes       Quote[]
+  invoices     Invoice[]
 
   @@index([customerId, dateReceived])
   @@index([technicianId, status])
@@ -125,6 +147,53 @@ model QuoteItem {
 
   @@index([quoteId])
   @@map("quote_items")
+}
+
+model Invoice {
+  id          BigInt        @id @default(autoincrement())
+  reference   String        @unique @db.VarChar(30)
+  customerId  BigInt        @map("customer_id")
+  repairJobId BigInt?       @map("repair_job_id")
+  status      InvoiceStatus @default(Draft)
+  issuedAt    DateTime      @map("issued_at") @db.Date
+  dueAt       DateTime      @map("due_at") @db.Date
+  customer    Customer      @relation(fields: [customerId], references: [id], onDelete: Restrict)
+  repairJob   RepairJob?    @relation(fields: [repairJobId], references: [id], onDelete: SetNull)
+  items       InvoiceItem[]
+  payments    Payment[]
+  createdAt   DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime      @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([customerId, issuedAt])
+  @@index([repairJobId])
+  @@index([status, dueAt])
+  @@map("invoices")
+}
+
+model InvoiceItem {
+  id             BigInt  @id @default(autoincrement())
+  invoiceId      BigInt  @map("invoice_id")
+  description    String  @db.VarChar(255)
+  quantity       Int
+  unitPricePence Int     @map("unit_price_pence")
+  invoice        Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+
+  @@index([invoiceId])
+  @@map("invoice_items")
+}
+
+model Payment {
+  id            BigInt        @id @default(autoincrement())
+  invoiceId     BigInt        @map("invoice_id")
+  amountPence   Int           @map("amount_pence")
+  method        PaymentMethod
+  reference     String?       @db.VarChar(100)
+  paidAt        DateTime      @map("paid_at") @db.Date
+  invoice       Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  createdAt     DateTime      @default(now()) @map("created_at") @db.Timestamptz(6)
+
+  @@index([invoiceId, paidAt])
+  @@map("payments")
 }
 
 model InventoryItem {
