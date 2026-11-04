@@ -35,7 +35,7 @@ export const primaryNavItems: NavItem[] = [
   { label: 'Quotes & Estimates', icon: IconFileInvoice, href: '/dashboard/quotes' },
   { label: 'Parts & Inventory', icon: IconBox, href: '/dashboard/inventory' },
   { label: 'Invoices & Payments', icon: IconCreditCard, href: '/dashboard/invoices' },
-  { label: 'Technicians', icon: IconUserCog },
+  { label: 'Technicians', icon: IconUserCog, href: '/dashboard/technicians' },
   { label: 'Reports', icon: IconChartBar },
 ];
 
@@ -169,6 +169,16 @@ export interface PaymentListItem {
   method: string;
   reference: string;
   paidAt: string;
+}
+
+export interface TechnicianListItem {
+  id: string;
+  name: string;
+  isActive: boolean;
+  repairJobs: number;
+  openJobs: number;
+  overdueJobs: number;
+  appointments: number;
 }
 
 export interface AttentionItem {

@@ -26,5 +26,9 @@ describe('DashboardSidebar', () => {
       'href',
       '/dashboard/invoices'
     );
+    expect(screen.getByRole('link', { name: 'Technicians' })).toHaveAttribute(
+      'href',
+      '/dashboard/technicians'
+    );
   });
 });

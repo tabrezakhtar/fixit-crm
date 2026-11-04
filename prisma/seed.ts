@@ -2,7 +2,14 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 import { todaySchedule } from '../components/Dashboard/data';
 import { AppointmentStatus, PrismaClient } from '../generated/prisma/client';
-import { customers, inventoryItems, invoices, quotes, repairJobs } from './seed-data';
+import {
+  customers,
+  inventoryItems,
+  invoices,
+  quotes,
+  repairJobs,
+  technicianRoster,
+} from './seed-data';
 import { createSeedDateShifter } from './seed-date';
 
 const connectionString = process.env.DATABASE_URL;
@@ -63,8 +70,15 @@ function appointmentDate(time: string, daysFromToday = 0): Date {
 }
 
 async function seed() {
+  const technicianAvailability = new Map(
+    technicianRoster.map((technician) => [
+      `${technician.firstName} ${technician.lastName}`,
+      technician.isActive,
+    ])
+  );
   const technicianNames = Array.from(
     new Set([
+      ...technicianRoster.map((technician) => `${technician.firstName} ${technician.lastName}`),
       ...repairJobs.map((job) => job.technician),
       ...todaySchedule.map((appointment) => appointment.technician),
     ])
@@ -92,7 +106,11 @@ async function seed() {
     await transaction.technician.createMany({
       data: technicianNames.map((name) => {
         const [firstName, ...lastNameParts] = name.split(' ');
-        return { firstName, lastName: lastNameParts.join(' ') };
+        return {
+          firstName,
+          lastName: lastNameParts.join(' '),
+          isActive: technicianAvailability.get(name) ?? true,
+        };
       }),
     });
 

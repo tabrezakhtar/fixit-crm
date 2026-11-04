@@ -771,6 +771,11 @@ export const inventoryItems = [
   },
 ];
 
+export const technicianRoster = [
+  { firstName: 'Fatima', lastName: 'Ali', isActive: true },
+  { firstName: 'Oliver', lastName: 'Grant', isActive: false },
+];
+
 export const invoices = [
   {
     reference: 'INV-4101',
