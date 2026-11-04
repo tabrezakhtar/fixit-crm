@@ -33,7 +33,7 @@ export const primaryNavItems: NavItem[] = [
   { label: 'Equipment', icon: IconDeviceLaptop, href: '/dashboard/equipment' },
   { label: 'Appointments & Schedule', icon: IconCalendarEvent, href: '/dashboard/appointments' },
   { label: 'Quotes & Estimates', icon: IconFileInvoice, href: '/dashboard/quotes' },
-  { label: 'Parts & Inventory', icon: IconBox },
+  { label: 'Parts & Inventory', icon: IconBox, href: '/dashboard/inventory' },
   { label: 'Invoices & Payments', icon: IconCreditCard },
   { label: 'Technicians', icon: IconUserCog },
   { label: 'Reports', icon: IconChartBar },
@@ -124,6 +124,20 @@ export interface QuoteListItem {
   totalPence: number;
   issuedAt: string;
   validUntil: string;
+}
+
+export type InventoryStockStatus = 'In stock' | 'Low stock' | 'Out of stock';
+
+export interface InventoryListItem {
+  sku: string;
+  name: string;
+  category: string;
+  supplier: string;
+  quantityOnHand: number;
+  reorderLevel: number;
+  unitCostPence: number;
+  location: string;
+  stockStatus: InventoryStockStatus;
 }
 
 export interface AttentionItem {

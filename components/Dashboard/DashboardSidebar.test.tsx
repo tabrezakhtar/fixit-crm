@@ -18,5 +18,9 @@ describe('DashboardSidebar', () => {
       'href',
       '/dashboard/repair-jobs'
     );
+    expect(screen.getByRole('link', { name: 'Parts & Inventory' })).toHaveAttribute(
+      'href',
+      '/dashboard/inventory'
+    );
   });
 });

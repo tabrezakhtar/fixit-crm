@@ -127,6 +127,24 @@ model QuoteItem {
   @@map("quote_items")
 }
 
+model InventoryItem {
+  id              BigInt   @id @default(autoincrement())
+  sku             String   @unique @db.VarChar(40)
+  name            String   @db.VarChar(255)
+  category        String   @db.VarChar(100)
+  supplier        String   @db.VarChar(255)
+  quantityOnHand  Int      @map("quantity_on_hand")
+  reorderLevel    Int      @map("reorder_level")
+  unitCostPence   Int      @map("unit_cost_pence")
+  location        String?  @db.VarChar(100)
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt       DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
+  @@index([category, name])
+  @@index([quantityOnHand, reorderLevel])
+  @@map("inventory_items")
+}
+
 model Appointment {
   id           BigInt            @id @default(autoincrement())
   customerId   BigInt            @map("customer_id")

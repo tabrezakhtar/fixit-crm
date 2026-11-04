@@ -2,7 +2,7 @@ import { PrismaPg } from '@prisma/adapter-pg';
 import 'dotenv/config';
 import { todaySchedule } from '../components/Dashboard/data';
 import { AppointmentStatus, PrismaClient } from '../generated/prisma/client';
-import { customers, quotes, repairJobs } from './seed-data';
+import { customers, inventoryItems, quotes, repairJobs } from './seed-data';
 import { createSeedDateShifter } from './seed-date';
 
 const connectionString = process.env.DATABASE_URL;
@@ -68,6 +68,7 @@ async function seed() {
 
   await prisma.$transaction(async (transaction) => {
     await transaction.appointment.deleteMany();
+    await transaction.inventoryItem.deleteMany();
     await transaction.quote.deleteMany();
     await transaction.repairJob.deleteMany();
     await transaction.technician.deleteMany();
@@ -140,6 +141,8 @@ async function seed() {
       ),
     });
 
+    await transaction.inventoryItem.createMany({ data: inventoryItems });
+
     await transaction.appointment.createMany({
       data: todaySchedule.map((appointment) => ({
         customerId: getCustomerId(appointment.customer),
@@ -152,7 +155,7 @@ async function seed() {
   });
 
   process.stdout.write(
-    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, ${quotes.length} quotes, and ${todaySchedule.length} appointments.\n`
+    `Seeded ${customers.length} customers, ${technicianNames.length} technicians, ${repairJobs.length} repair jobs, ${quotes.length} quotes, ${inventoryItems.length} inventory items, and ${todaySchedule.length} appointments.\n`
   );
 }
 
