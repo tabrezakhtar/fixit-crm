@@ -30,5 +30,9 @@ describe('DashboardSidebar', () => {
       'href',
       '/dashboard/technicians'
     );
+    expect(screen.getByRole('link', { name: 'Reports' })).toHaveAttribute(
+      'href',
+      '/dashboard/reports'
+    );
   });
 });

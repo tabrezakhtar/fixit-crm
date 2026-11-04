@@ -36,7 +36,7 @@ export const primaryNavItems: NavItem[] = [
   { label: 'Parts & Inventory', icon: IconBox, href: '/dashboard/inventory' },
   { label: 'Invoices & Payments', icon: IconCreditCard, href: '/dashboard/invoices' },
   { label: 'Technicians', icon: IconUserCog, href: '/dashboard/technicians' },
-  { label: 'Reports', icon: IconChartBar },
+  { label: 'Reports', icon: IconChartBar, href: '/dashboard/reports' },
 ];
 
 export const secondaryNavItems: NavItem[] = [{ label: 'Settings', icon: IconSettings }];
@@ -179,6 +179,40 @@ export interface TechnicianListItem {
   openJobs: number;
   overdueJobs: number;
   appointments: number;
+}
+
+export type ReportId =
+  | 'repair-status'
+  | 'outstanding-invoices'
+  | 'payment-history'
+  | 'low-stock'
+  | 'technician-workload';
+
+export const reportOptions: Array<{ value: ReportId; label: string }> = [
+  { value: 'repair-status', label: 'Repair jobs by status' },
+  { value: 'outstanding-invoices', label: 'Outstanding invoices' },
+  { value: 'payment-history', label: 'Payment history' },
+  { value: 'low-stock', label: 'Low stock report' },
+  { value: 'technician-workload', label: 'Technician workload' },
+];
+
+export interface ReportRow {
+  id: string;
+  subject: string;
+  detail: string;
+  metric: string;
+  status: string;
+}
+
+export interface ReportData {
+  id: ReportId;
+  label: string;
+  description: string;
+  subjectHeading: string;
+  detailHeading: string;
+  metricHeading: string;
+  statusHeading: string;
+  rows: ReportRow[];
 }
 
 export interface AttentionItem {
